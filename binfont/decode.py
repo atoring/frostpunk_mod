@@ -78,17 +78,17 @@ def decode():
     print("ver: %d" % ver)
     print("texs: %d" % texs)
     offset = 12+texs*4
-    write_bin("./out/head.bin", data[:offset])
+#    write_bin("./out/head.bin", data[:offset])
     for i in range(texs):
         height = struct.unpack("<I", data[12+i*4:16+i*4])[0]
         print("height: %d" % height)
         size = width*height*(bpp//8)
         tex = data[offset:offset+size]
-        write_bin("./out/tex%d.bin" % i, tex)
+#        write_bin("./out/tex%d.bin" % i, tex)
         write_png("./out/tex%d.png" % i, tex, width, height, bpp)
         offset += size
 
-    write_bin("./out/chars.bin", data[offset:])
+#    write_bin("./out/chars.bin", data[offset:])
     write_chars("./out/chars.txt", data[offset:])
     write_codes("./out/codes", data[offset:])
 
