@@ -154,10 +154,10 @@ def encode():
         print("tex: %d" % cnt)
         cnt += 1
         if True:
-            for i in range(w*h):
+            for i in range(len(t)//4):
                 bin.extend([t[i*4],t[i*4+1],t[i*4+2],0])
         else:   # fix
-            for i in range(w*h):
+            for i in range(len(t)//4):
                 bin.extend([0xff,(int)(t[i*4]*0.6),0,0])
     bin.extend(struct.pack("<I", len(chrs)))
     for c in chrs:
