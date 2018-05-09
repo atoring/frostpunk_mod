@@ -5,6 +5,8 @@ Frostpunk用のModツール
 - binfont: binfontファイルをデコード/エンコードします。
 - lang: langファイルをデコード/エンコードします。
 
+[実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。
+
 ## 生成物
 - 日本語フォント (既存の中国語文字セットに平仮名、片仮名、記号などを追加したもの)<br>
 https://github.com/atoring/frostpunk_mod/raw/master/binfont/out/notosanscjksc-medium.otf.binfont.zip
