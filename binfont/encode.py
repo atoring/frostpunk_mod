@@ -117,6 +117,10 @@ def read_png(path):
     print("width: %d" % width)
     height = img.height
     print("height: %d" % height)
+    if True:    # fix
+        r,g,b,a = img.split()
+        z = a.point(lambda p:0)
+        img = Image.merge("RGBA", (r,g,b,z))
     data = img.tobytes()
     print("size: %xh" % len(data))
     return width, height, data
@@ -140,25 +144,16 @@ def encode():
     bin = bytearray()
     magic,ver,texs = (0x35150f8a,9,len(tex_file))
     bin.extend(struct.pack("<III", magic,ver,texs))
-    tex = []
+    tex = bytearray()
     for t in tex_file:
-        w,h,d = read_png("./data/%s" % t)
+#        w,h,d = read_png("./data/%s" % t)
+        w,h,d = read_png("./out/%s" % t)
         if w != width:
             print("error: width")
             quit()
         bin.extend(struct.pack("<I", h))
-        tex.append(d)
-    print("creating data...")
-    cnt = 0
-    for t in tex:
-        print("tex: %d" % cnt)
-        cnt += 1
-        if True:
-            for i in range(len(t)//4):
-                bin.extend([t[i*4],t[i*4+1],t[i*4+2],0])
-        else:   # fix
-            for i in range(len(t)//4):
-                bin.extend([0xff,(int)(t[i*4]*0.6),0,0])
+        tex.extend(d)
+    bin.extend(tex)
     bin.extend(struct.pack("<I", len(chrs)))
     for c in chrs:
         id,x,y,w,h,xoffset,yoffset,xadvance,page,chnl = (c["id"],c["x"],c["y"],c["width"],c["height"],c["xoffset"],c["yoffset"],c["xadvance"],c["page"],c["chnl"])

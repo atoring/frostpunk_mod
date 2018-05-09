@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="decode.py" />
     <Compile Include="encode.py" />
+    <Compile Include="fix_png.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
