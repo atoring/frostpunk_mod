@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="csv2lang.py" />
+    <Compile Include="fetch_sheet.py" />
     <Compile Include="lang2csv.py" />
     <Compile Include="make_ja.py" />
   </ItemGroup>
