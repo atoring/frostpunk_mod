@@ -22,3 +22,6 @@ https://github.com/atoring/frostpunk_mod/raw/master/binfont/out/notosanscjksc-me
 - http://www.angelcode.com/products/bmfont/
 - https://www.google.com/get/noto/
 - https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8
+
+## ToDo
+- exe一回実行かGUIボタン一回押すだけで簡単にMOD適応できるツール
