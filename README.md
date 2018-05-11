@@ -4,6 +4,7 @@ Frostpunk用のModツール
 ## ツール
 - binfont: binfontファイルをデコード/エンコードします。
 - lang: langファイルをデコード/エンコードします。
+- dat: idx/datファイルをデコードします。(テスト中)
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。
 
