@@ -19,7 +19,7 @@ There are also [executable binaries](https://github.com/atoring/frostpunk_mod/re
 ## 生成物 | Data created
 ### [日本語フォント | Japanese font](https://github.com/atoring/frostpunk_mod/raw/master/binfont/out/notosanscjksc-medium.otf.binfont.zip)
 既存の中国語文字セットに平仮名、片仮名、記号などを追加したもの<br>
-Font set which added hiragana, katakana, symbols etc to the existing Chinese character set
+Font which added hiragana, katakana, symbols etc to the existing Chinese characters
 
 ## 参考画像 | Reference images
 - 2018/05/09現在 (機械翻訳も含まれています)<br>
