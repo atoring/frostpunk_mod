@@ -202,7 +202,7 @@ def patch_font():
         # binfont
         if not os.path.exists("../binfont/out/notosanscjksc-medium.otf.binfont"):
             subprocess.Popen(["../compile/unzip", "-d", "../binfont/out/", "../binfont/out/notosanscjksc-medium.otf.binfont.zip"]).wait()
-#        shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
+        shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
 
         # pack
         subprocess.Popen(["python", "./pack.py"]).wait()
