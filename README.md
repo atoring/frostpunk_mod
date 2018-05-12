@@ -12,6 +12,9 @@ decode/encode binfont file
 ### [lang](https://github.com/atoring/frostpunk_mod/tree/master/lang)
 lang言語ファイルをデコード/エンコードします。<br>
 decode/encode lang file
+### [general](https://github.com/atoring/frostpunk_mod/tree/master/general)
+GUIの総合MODツールです。(作業中)<br>
+general mod tool of GUI (wip)
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
 There are also [executable binaries](https://github.com/atoring/frostpunk_mod/releases), but it may not be latest on the release timing.
