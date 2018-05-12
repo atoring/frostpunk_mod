@@ -67,7 +67,9 @@ def csv2lang():
     write_bin("./out/french.lang", make_lang(fr))
     write_bin("./out/german.lang", make_lang(de))
     write_bin("./out/spanish.lang", make_lang(es))
-    write_bin("./out/7D919140.lang", make_lang(pl)) # polish
+    pl = make_lang(pl)
+    write_bin("./out/polish.lang", pl)
+#    write_bin("./out/7D919140.dat", pl)
     write_bin("./out/russian.lang", make_lang(ru))
     write_bin("./out/chinese.lang", make_lang(zh))
 

@@ -5,6 +5,7 @@
 
 import codecs
 import csv
+import os
 import struct
 
 def read_bin(path):
@@ -96,7 +97,13 @@ def lang2csv():
 #    write_txt("./out/german.txt", de)
     es = read_lang("./data/spanish.lang")
 #    write_txt("./out/spanish.txt", es)
-    pl = read_lang("./data/7D919140.dat")   # polish
+    if os.path.exists("./data/polish.lang"):
+        pl = read_lang("./data/polish.lang")
+    elif os.path.exists("./data/7D919140.dat"):
+        pl = read_lang("./data/7D919140.dat")
+    else:
+        print("error: file not exist:./data/polish.lang or ./data/7D919140.dat")
+        quit()
 #    write_txt("./out/7D919140.txt", pl)
     ru = read_lang("./data/russian.lang")
 #    write_txt("./out/russian.txt", ru)
