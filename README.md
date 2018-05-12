@@ -7,10 +7,10 @@ Mod Tools for [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)
 dat+idxアーカイブファイルを展開分割/圧縮結合します。<br>
 unpack/pack dat+idx archive file
 ### [binfont](https://github.com/atoring/frostpunk_mod/tree/master/binfont)
-binfontファイルをデコード/エンコードします。<br>
+binfontフォントファイルをデコード/エンコードします。<br>
 decode/encode binfont file
 ### [lang](https://github.com/atoring/frostpunk_mod/tree/master/lang)
-langファイルをデコード/エンコードします。<br>
+lang言語ファイルをデコード/エンコードします。<br>
 decode/encode lang file
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
