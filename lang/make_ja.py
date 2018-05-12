@@ -79,6 +79,9 @@ def make_lang(data):
     bin = bytearray()
     bin.extend(struct.pack("<II", 0, len(data)))
     for d in data.keys():
+        if True:    # fix
+            if d == "UI/Menu/Settings/LanguageNames/Chinese":
+                data[d] = "日本語"
         bin.extend(struct.pack("<H", len(d)))
         bin.extend(d.encode("ascii"))
         _d = data[d].replace("</n>", "\n") # for Frostpunk LANG Tool
@@ -116,5 +119,16 @@ def make_ja():
     ja = marge_data(en, data2, 4, 1, 2)
 #    write_txt("./out/japanese_wmt.txt", ja)
     write_bin("./out/japanese_wmt.lang", make_lang(ja))
+
+    if True:
+        write_bin("./out/english.lang", make_lang(en))
+        write_bin("./out/french.lang", make_lang(fr))
+        write_bin("./out/german.lang", make_lang(de))
+        write_bin("./out/spanish.lang", make_lang(es))
+        pl = make_lang(pl)
+        write_bin("./out/polish.lang", pl)
+#        write_bin("./out/7D919140.dat", pl)
+        write_bin("./out/russian.lang", make_lang(ru))
+        write_bin("./out/chinese.lang", make_lang(zh))
 
 make_ja()

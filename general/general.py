@@ -285,10 +285,23 @@ def patch_lang():
             subprocess.Popen(["python", "./make_ja.py"]).wait()
         except OSError:
             subprocess.Popen(["./make_ja.exe"]).wait()
+        shutil.copy2("./out/english.lang", "../dat/out/localizations/english.lang")
+        shutil.copy2("./out/french.lang", "../dat/out/localizations/french.lang")
+        shutil.copy2("./out/german.lang", "../dat/out/localizations/german.lang")
+        shutil.copy2("./out/spanish.lang", "../dat/out/localizations/spanish.lang")
+        shutil.copy2("./out/polish.lang", "../dat/out/localizations/polish.lang")
+        shutil.copy2("./out/russian.lang", "../dat/out/localizations/russian.lang")
         if wmt:
             shutil.copy2("./out/japanese_wmt.lang", "../dat/out/localizations/chinese.lang")
         else:
             shutil.copy2("./out/japanese.lang", "../dat/out/localizations/chinese.lang")
+        os.remove("./out/english.lang")
+        os.remove("./out/french.lang")
+        os.remove("./out/german.lang")
+        os.remove("./out/spanish.lang")
+        os.remove("./out/polish.lang")
+        os.remove("./out/russian.lang")
+        os.remove("./out/chinese.lang")
         os.remove("./out/japanese.lang")
         os.remove("./out/japanese_wmt.lang")
         os.chdir("../dat/")
