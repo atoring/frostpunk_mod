@@ -3,15 +3,15 @@
 Mod Tools for [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)
 
 ## ツール | Tools
+### [dat](https://github.com/atoring/frostpunk_mod/tree/master/dat)
+idx/datファイルをデコード/エンコードします。<br>
+decode/encode idx/dat file
 ### [binfont](https://github.com/atoring/frostpunk_mod/tree/master/binfont)
 binfontファイルをデコード/エンコードします。<br>
 decode/encode binfont file
 ### [lang](https://github.com/atoring/frostpunk_mod/tree/master/lang)
 langファイルをデコード/エンコードします。<br>
 decode/encode lang file
-### [dat](https://github.com/atoring/frostpunk_mod/tree/master/dat)
-idx/datファイルをデコードします。(テスト中)<br>
-decode idx/dat file (test)
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
 There are also [executable binaries](https://github.com/atoring/frostpunk_mod/releases), but it may not be latest on the release timing.
