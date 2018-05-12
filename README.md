@@ -1,6 +1,6 @@
 # Frostpunk / Mod Tools
 [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)用のModツール<br>
-Mod Tool for [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)
+Mod Tools for [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)
 
 ## ツール | Tools
 ### [binfont](https://github.com/atoring/frostpunk_mod/tree/master/binfont)
