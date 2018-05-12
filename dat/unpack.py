@@ -7,7 +7,7 @@ import io
 import os
 import struct
 
-file_list = {0x781880b4:"english.lang",0xf8b11d94:"french.lang",0x3268a4d1:"german.lang",0x93d6426a:"spanish.lang",0x7d919140:"polish.lang",0xf2232be3:"russian.lang",0xfce49418:"chinese.lang"}
+file_list = {0x781880b4:"english.lang",0xf8b11d94:"french.lang",0x3268a4d1:"german.lang",0x93d6426a:"spanish.lang",0x7d919140:"polish.lang",0xf2232be3:"russian.lang",0xfce49418:"chinese.lang",0x6b04d7c3:"notosanscjksc-medium.otf.binfont"}
 
 def read_bin(path):
     print("read file: %s" % path)
@@ -34,7 +34,7 @@ def parse_idx(data):
         idx.append({"id":id,"size1":size1,"size2":size2,"offset":offset,"flag":flag})
     return idx
 
-def decompress(data):
+def decompress(data, dec_size):
     # head
     magic = struct.unpack("<BB", data[:2])
 #    print("magic: %02xh,%02xh" % magic)
@@ -70,14 +70,18 @@ def decompress(data):
         buf.write(data)
         buf.seek(0)
         f = gzip.GzipFile(fileobj=buf, mode='rb')
-        while True:
-            try:
-                d = f.read(1)
-                if d == "":
+        if False:
+            while True:
+                try:
+                    d = f.read(1)
+                    if d == "":
+                        break
+                    bin.extend(d)
+                except:
                     break
-                bin.extend(d)
-            except:
-                break
+        else:
+            d = f.read(dec_size)
+            bin.extend(d)
         f.close()
     return bin
 
@@ -118,7 +122,7 @@ def decode_file(file):
         if flag == 0:
             write_bin(path, bin)
         elif flag == 1:
-            dec = decompress(bin)
+            dec = decompress(bin, size2)
             dec_size = len(dec)
             print("dec size: %xh" % dec_size)
             if dec_size != size2:

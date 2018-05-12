@@ -6,7 +6,7 @@ import gzip
 import os
 import struct
 
-file_list = {"english.lang":0x781880b4,"french.lang":0xf8b11d94,"german.lang":0x3268a4d1,"spanish.lang":0x93d6426a,"polish.lang":0x7d919140,"russian.lang":0xf2232be3,"chinese.lang":0xfce49418}
+file_list = {"english.lang":0x781880b4,"french.lang":0xf8b11d94,"german.lang":0x3268a4d1,"spanish.lang":0x93d6426a,"polish.lang":0x7d919140,"russian.lang":0xf2232be3,"chinese.lang":0xfce49418,"notosanscjksc-medium.otf.binfont":0x6b04d7c3}
 
 def read_bin(path):
     print("read file: %s" % path)
