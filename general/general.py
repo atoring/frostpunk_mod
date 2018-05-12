@@ -152,7 +152,10 @@ def download_sheet():
                 return
 
         os.chdir("../lang/")
-        subprocess.Popen(["python", "./fetch_sheet.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./fetch_sheet.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./fetch_sheet.exe"]).wait()
         os.chdir("../general/")
         messagebox.showinfo("情報", "翻訳シートをダウンロードしました。")
 
@@ -195,7 +198,10 @@ def patch_font():
         shutil.copy2("%s/common.dat" % path, "./data/common.dat")
         if os.path.exists("./out/common"):
             shutil.rmtree("./out/common")
-        subprocess.Popen(["python", "./unpack.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./unpack.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./unpack.exe"]).wait()
         os.remove("./data/common.idx")
         os.remove("./data/common.dat")
 
@@ -205,7 +211,10 @@ def patch_font():
         shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
 
         # pack
-        subprocess.Popen(["python", "./pack.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./pack.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./pack.exe"]).wait()
         shutil.rmtree("./out/common")
 
         # copy
@@ -232,6 +241,8 @@ def patch_lang():
 
     result = messagebox.askquestion("確認", "翻訳パッチを適応します。\nよろしいですか?", icon="warning")
     if result == "yes":
+        result = messagebox.askquestion("確認", "Googleによる機械翻訳のデータを含めますか?")
+        wmt = result == "yes"
         os.chdir("../dat/")
         if False:
             path = game_path
@@ -243,7 +254,10 @@ def patch_lang():
         shutil.copy2("%s/localizations.dat" % path, "./data/localizations.dat")
         if os.path.exists("./out/localizations"):
             shutil.rmtree("./out/localizations")
-        subprocess.Popen(["python", "./unpack.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./unpack.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./unpack.exe"]).wait()
         os.remove("./data/localizations.idx")
         os.remove("./data/localizations.dat")
 
@@ -256,7 +270,10 @@ def patch_lang():
         shutil.copy2("../dat/out/localizations/polish.lang", "./data/polish.lang")
         shutil.copy2("../dat/out/localizations/russian.lang", "./data/russian.lang")
         shutil.copy2("../dat/out/localizations/chinese.lang", "./data/chinese.lang")
-        subprocess.Popen(["python", "./lang2csv.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./lang2csv.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./lang2csv.exe"]).wait()
         os.remove("./data/english.lang")
         os.remove("./data/french.lang")
         os.remove("./data/german.lang")
@@ -264,15 +281,23 @@ def patch_lang():
         os.remove("./data/polish.lang")
         os.remove("./data/russian.lang")
         os.remove("./data/chinese.lang")
-        subprocess.Popen(["python", "./make_ja.py"]).wait()
-#        shutil.copy2("./out/japanese.lang", "../dat/out/localizations/chinese.lang")
-        shutil.copy2("./out/japanese_wmt.lang", "../dat/out/localizations/chinese.lang")
+        try:
+            subprocess.Popen(["python", "./make_ja.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./make_ja.exe"]).wait()
+        if wmt:
+            shutil.copy2("./out/japanese_wmt.lang", "../dat/out/localizations/chinese.lang")
+        else:
+            shutil.copy2("./out/japanese.lang", "../dat/out/localizations/chinese.lang")
         os.remove("./out/japanese.lang")
         os.remove("./out/japanese_wmt.lang")
         os.chdir("../dat/")
 
         # pack
-        subprocess.Popen(["python", "./pack.py"]).wait()
+        try:
+            subprocess.Popen(["python", "./pack.py"]).wait()
+        except OSError:
+            subprocess.Popen(["./pack.exe"]).wait()
         shutil.rmtree("./out/localizations")
 
         # copy
@@ -331,6 +356,7 @@ def main():
     main_win = Tk()
     main_win.title("Frostpunk用総合MODツール")
     main_win.geometry("380x510")
+    main_win.resizable(0,0)
     main_win.protocol("WM_DELETE_WINDOW", on_closing)
     center(main_win)
 
