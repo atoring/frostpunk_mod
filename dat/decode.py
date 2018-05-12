@@ -37,20 +37,20 @@ def parse_idx(data):
 def decompress(data):
     # head
     magic = struct.unpack("<BB", data[:2])
-    print("magic: %02xh,%02xh" % magic)
+#    print("magic: %02xh,%02xh" % magic)
     if magic != (0x1f,0x8b):    # gzip magic
         print("error: magic")
         quit()
     comp = struct.unpack("B", data[2:3])[0]
-    print("comp: %02xh" % comp)
+#    print("comp: %02xh" % comp)
     if comp != 0x08: #  deflate
         print("error: comp")
         quit()
     flag,time,exflag,os = struct.unpack("<BIBB", data[3:10])
-    print("flag: %02xh" % flag)
-    print("time: %08xh" % time)
-    print("exflag: %02xh" % exflag)
-    print("os: %02xh" % os)
+#    print("flag: %02xh" % flag)
+#    print("time: %08xh" % time)
+#    print("exflag: %02xh" % exflag)
+#    print("os: %02xh" % os)
     if flag != 0:
         print("error: not supported flag")
         quit()
@@ -93,6 +93,7 @@ def write_bin(path, data):
     print("write size: %xh" % len(data))
 
 def decode_file(file):
+    print("decode: ./data/%s.*" % file)
     idx_path = "./data/%s.idx" % file
     dat_path = "./data/%s.dat" % file
     out_path = "./out/%s" % file
@@ -117,11 +118,13 @@ def decode_file(file):
         if flag == 0:
             write_bin(path, bin)
         elif flag == 1:
-            bin = decompress(bin)
-            if len(bin) != size2:
-                print("error: size:%xh!=%xh" % (len(bin),size2))
+            dec = decompress(bin)
+            dec_size = len(dec)
+            print("dec size: %xh" % dec_size)
+            if dec_size != size2:
+                print("error: size:%xh!=%xh" % (dec_size,size2))
                 quit()
-            write_bin(path, bin)
+            write_bin(path, dec)
         else:
             print("error: flag:%02xh" % flag)
             quit()
