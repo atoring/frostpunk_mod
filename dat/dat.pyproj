@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b876d479-1584-4cbb-9dc4-b5dfd271d4af</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>decode.py</StartupFile>
+    <StartupFile>unpack.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,8 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="decode.py" />
-    <Compile Include="encode.py" />
+    <Compile Include="pack.py" />
+    <Compile Include="unpack.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
