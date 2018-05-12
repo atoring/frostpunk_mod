@@ -45,10 +45,11 @@ def encode_file(file):
 
     files = glob.glob(in_path)
     files.sort()
-    idx = bytearray()
+    idx = {}
+    _idx = bytearray()
     dat = bytearray()
     offset = 0
-    idx.extend(struct.pack("<BBBII", 0x00,0x02,0x01,len(files),0))
+    _idx.extend(struct.pack("<BBBII", 0x00,0x02,0x01,len(files),0))
     for f in files:
         data = read_bin(f)
         comp = compress(data)
@@ -62,11 +63,13 @@ def encode_file(file):
         size2 = len(data)
         flag = 1
         print("id:%08xh, size1:%08xh, size2:%08xh, offset:%08xh, flag:%02xh" % (id,size1,size2,offset,flag))
-        idx.extend(struct.pack("<IIIIB", id,size1,size2,offset,flag))
+        idx[id] = struct.pack("<IIIIB", id,size1,size2,offset,flag)
         dat.extend(comp)
         offset += size1
+    for id in sorted(idx.keys()):
+        _idx.extend(idx[id])
 
-    write_bin(idx_path, idx)
+    write_bin(idx_path, _idx)
     write_bin(dat_path, dat)
 
 def encode():
