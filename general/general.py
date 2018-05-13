@@ -206,8 +206,7 @@ def patch_font():
         os.remove("./data/common.dat")
 
         # binfont
-        if not os.path.exists("../binfont/out/notosanscjksc-medium.otf.binfont"):
-            subprocess.Popen(["../compile/unzip", "-d", "../binfont/out/", "../binfont/out/notosanscjksc-medium.otf.binfont.zip"]).wait()
+        subprocess.Popen(["../compile/unzip", "-d", "../binfont/out/", "../binfont/out/notosanscjksc-medium.otf.binfont.zip"]).wait()
         shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
 
         # pack
