@@ -35,6 +35,6 @@ Font which added hiragana, katakana, symbols etc to the existing Chinese charact
 - https://www.google.com/get/noto/
 - https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8
 
-## 予定 | Plans
+## 予定(未定) | Plans
 - ログファイル出力機能追加
 - C/C#などで書き直し
