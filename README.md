@@ -36,6 +36,7 @@ Font which added hiragana, katakana, symbols etc to the existing Chinese charact
 - https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8
 
 ## 予定(未定) | Plans
+- フォントをぼかさずにアンチエイリアスが掛かるように
 - パッチ時に使用文字のチェック機能
 - ログファイル出力機能追加
 - C/C#などで書き直し
