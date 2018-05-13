@@ -16,7 +16,8 @@ for %%f in (..\lang\*.exe) do copy %%f tmp\lang
 for %%f in (..\general\*.exe) do copy %%f tmp\general
 
 set d=%date:/=%
-set t=%time:~0,5%
+set t=%time: =0%
+set t=%t:~0,5%
 set t=%t::=%
 cd tmp
 ..\zip -9 -r ..\frostpunk_mod_%d%_%t%.zip *.*
