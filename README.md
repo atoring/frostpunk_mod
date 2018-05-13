@@ -38,3 +38,4 @@ Font which added hiragana, katakana, symbols etc to the existing Chinese charact
 ## 予定(未定) | Plans
 - ログファイル出力機能追加
 - C/C#などで書き直し
+- ファイル仕様など文章化
