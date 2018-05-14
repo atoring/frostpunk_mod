@@ -2,6 +2,8 @@
 
 set pyi="C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\Scripts\pyinstaller.exe"
 
+call make_ver.bat
+
 for %%f in (..\dat\*.py) do %pyi% --onefile %%f
 copy dist\*.exe ..\dat
 rd /S /Q ..\dat\__pycache__
@@ -29,3 +31,5 @@ rd /S /Q ..\general\__pycache__
 rd /S /Q build
 rd /S /Q dist
 del /Q *.spec
+
+del /Q ..\general\version.exe

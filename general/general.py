@@ -10,7 +10,8 @@ import shutil
 import subprocess
 import webbrowser
 
-version = "20180513"
+import version  # version_str
+
 game_url = "https://store.steampowered.com/app/323190/Frostpunk/"
 tool_url = "https://github.com/atoring/frostpunk_mod"
 sheet_url = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8"
@@ -206,11 +207,14 @@ def patch_font():
         os.remove("./data/common.dat")
 
         # binfont
-        if os.path.exists("../binfont/out/notosanscjksc-medium.otf.binfont"):
+        if True:
+            if os.path.exists("../binfont/out/notosanscjksc-medium.otf.binfont"):
+                os.remove("../binfont/out/notosanscjksc-medium.otf.binfont")
+            subprocess.Popen(["../compile/unzip", "-d", "../binfont/out/", "../binfont/out/notosanscjksc-medium.otf.binfont.zip"]).wait()
+            shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
             os.remove("../binfont/out/notosanscjksc-medium.otf.binfont")
-        subprocess.Popen(["../compile/unzip", "-d", "../binfont/out/", "../binfont/out/notosanscjksc-medium.otf.binfont.zip"]).wait()
-        shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
-        os.remove("../binfont/out/notosanscjksc-medium.otf.binfont")
+        else:   # test
+            shutil.copy2("../binfont/out/notosanscjksc-medium.otf.binfont", "./out/common/notosanscjksc-medium.otf.binfont")
 
         # pack
         try:
@@ -380,7 +384,7 @@ def main():
     main_frame.pack(padx=4,pady=4,ipadx=20,ipady=20, fill=BOTH)
 
     # version
-    version_label = Label(main_frame, text="ver %s" % version, fg=version_fg_color)
+    version_label = Label(main_frame, text="ver %s" % version.version_str, fg=version_fg_color)
     version_label.pack(padx=12, anchor=E)
 
     # config
