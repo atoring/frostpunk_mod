@@ -30,11 +30,41 @@ def write_bin(path, data):
     f.close()
     print("write size: %xh" % len(data))
 
-def write_png(path, data, width, height, bpp):
-    print("write file: %s" % path)
-#    img = Image.frombytes("RGBA", (width,height), data, "raw", "RGBA", 0, 1)
-    img = Image.frombytes("RGB", (width,height), data, "raw", "RGBX", 0, 1)
-    img.save(path, "png")
+def write_img(path, data, width, height):
+    img = Image.frombytes("RGBA", (width,height), data, "raw", "RGBA", 0, 1)
+#    img = Image.frombytes("RGB", (width,height), data, "raw", "RGBX", 0, 1)
+    r,g,b,a = img.split()
+
+    # raw
+    if True:
+        tmp = Image.merge("RGB", (r,g,b))
+        f = "%s.png" % path
+        tmp.save(f, "png")
+        print("write file: %s" % f)
+
+    # split
+    if True:
+        z = r.point(lambda p:0)
+        # r
+        tmp = Image.merge("RGB", (r,z,z))
+        f = "%s_r.png" % path
+        tmp.save(f, "png")
+        print("write file: %s" % f)
+        # g
+        tmp = Image.merge("RGB", (z,g,z))
+        f = "%s_g.png" % path
+        tmp.save(f, "png")
+        print("write file: %s" % f)
+        # b
+        tmp = Image.merge("RGB", (z,z,b))
+        f = "%s_b.png" % path
+        tmp.save(f, "png")
+        print("write file: %s" % f)
+        # a
+        tmp = Image.merge("RGB", (a,a,a))
+        f = "%s_a.png" % path
+        tmp.save(f, "png")
+        print("write file: %s" % f)
 
 def write_txt(path, encode, data):
     print("write file: %s" % path)
@@ -85,7 +115,7 @@ def decode():
         size = width*height*(bpp//8)
         tex = data[offset:offset+size]
 #        write_bin("./out/tex%d.bin" % i, tex)
-        write_png("./out/tex%d.png" % i, tex, width, height, bpp)
+        write_img("./out/tex%d" % i, tex, width, height)
         offset += size
 
 #    write_bin("./out/chars.bin", data[offset:])
