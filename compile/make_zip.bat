@@ -19,8 +19,14 @@ set d=%date:/=%
 set t=%time: =0%
 set t=%t:~0,5%
 set t=%t::=%
+
+%git% show --format=%%cd --date=format:%%Y%%m%%d_%%H%%M -s>_tmp
+set /p dt=<_tmp
+del /Q _tmp
+
 cd tmp
-..\zip -9 -r ..\frostpunk_mod_%d%_%t%.zip *.*
+rem ..\zip -9 -r ..\frostpunk_mod_%d%_%t%.zip *.*
+..\zip -9 -r ..\frostpunk_mod_%dt%.zip *.*
 cd ..
 
 rd /S /Q tmp
