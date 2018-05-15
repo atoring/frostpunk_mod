@@ -167,14 +167,16 @@ def encode():
         code = id
         tex = page
         if True:    # fix
-            if w > 3*2:
-                left += 3
-                right -= 3
+            if w > 3:
                 offset_left += 3
-            if h > 6*2:
-                top += 6
-                bottom -= 6
+                left += 3
+                if w > 3*2:
+                    right -= 3
+            if h > 6:
                 offset_top += 6
+                top += 6
+                if h > 6*2:
+                    bottom -= 6
         bin.extend(struct.pack("<fffffffHH", left,right,top,bottom,_width,offset_left,offset_top,code,tex))
     bin.extend(struct.pack("<fff", 46.25,0.0,7.03125))
 
