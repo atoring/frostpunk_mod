@@ -84,7 +84,8 @@ def make_lang(data):
                 data[d] = "日本語"
         bin.extend(struct.pack("<H", len(d)))
         bin.extend(d.encode("ascii"))
-        _d = data[d].replace("</n>", "\n") # for Frostpunk LANG Tool
+        _d = data[d].replace("</n>", "\n")  # compatible with Frostpunk LANG Tool
+        _d = _d.replace(r"<\n>", "\n")      # expansion for ja sheet
         bin.extend(struct.pack("<H", len(_d)))
         bin.extend(_d.encode("utf_16_le"))
     bin[:4] = struct.pack("<I", len(bin)-4)
