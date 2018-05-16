@@ -120,7 +120,7 @@ def check_macros(macros1, macros2, data):
     diff = macros2.difference(macros1)
 #    print(diff)
     if len(diff) > 0:
-        cnt = 0
+        cnt = 2
         for d in data.values():
             m = set(re.findall("{[a-zA-Z]+}", d))
             if len(m) > 0:
