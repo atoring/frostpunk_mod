@@ -128,6 +128,8 @@ def check_macros(macros1, macros2, data):
                 if len(_m) > 0:
                     print("error: line=",cnt,", macro=",_m)
             cnt += 1
+        print("### 翻訳シートにマクロエラーがありました。翻訳シートを修正してください。 ###")
+        input("何かキーを入力してください。")
 
 def make_ja():
     data = read_csv("./out/lang.csv")
