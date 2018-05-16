@@ -48,11 +48,14 @@ def marge_data(data1, data2, skip, index1, index2):
         if cnt >= len(data2):
             break
         if data2[cnt][index1] != "":
-            strs[d] = data2[cnt][index1]
+            _d = data2[cnt][index1]
+            _d = _d.replace("、", "，")   # quick hack for automatic new line
+            strs[d] = _d
         elif "{" not in data1[d] and index2>=0 and data2[cnt][index2]!="":
             _d = data2[cnt][index2]
-            _d = _d.replace("</ n>", "\n")
-            _d = _d.replace("</ N>", "\n")
+            _d = _d.replace("、", "，")   # quick hack for automatic new line
+            _d = _d.replace("</ n>", "\n")  # fix google translation's broken new line
+            _d = _d.replace("</ N>", "\n")  # fix google translation's broken new line
             strs[d] = _d
         else:
             strs[d] = data1[d]
