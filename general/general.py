@@ -13,8 +13,10 @@ import webbrowser
 import version  # version_str
 
 game_url = "https://store.steampowered.com/app/323190/Frostpunk/"
-tool_url = "https://github.com/atoring/frostpunk_mod"
-sheet_url = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8"
+tool_url1 = "https://github.com/atoring/frostpunk_mod"
+tool_url2 = "https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB"
+sheet_url1 = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/preview#gid=770455416"
+sheet_url2 = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/edit#gid=770455416"
 def_app_path1 = "C:/Program Files (x86)/Steam/SteamApps/common/Frostpunk"
 def_app_path2 = "C:/Program Files/Steam/SteamApps/common/Frostpunk"
 game_path = ""
@@ -345,21 +347,37 @@ def open_game_web():
 
     webbrowser.open_new(game_url)
 
-def open_tool_web():
+def open_tool_web1():
     if False:
         result = messagebox.askquestion("確認", "MODツールのWebサイトを開きます。\nよろしいですか?")
         if result != "yes":
             return
 
-    webbrowser.open_new(tool_url)
+    webbrowser.open_new(tool_url1)
 
-def open_sheet_web():
+def open_tool_web2():
     if False:
-        result = messagebox.askquestion("確認", "翻訳シートのWebサイトを開きます。\nよろしいですか?")
+        result = messagebox.askquestion("確認", "ヘルプを開きます。\nよろしいですか?")
         if result != "yes":
             return
 
-    webbrowser.open_new(sheet_url)
+    webbrowser.open_new(tool_url2)
+
+def open_sheet_web1():
+    if False:
+        result = messagebox.askquestion("確認", "翻訳シート(閲覧)のWebサイトを開きます。\nよろしいですか?")
+        if result != "yes":
+            return
+
+    webbrowser.open_new(sheet_url1)
+
+def open_sheet_web2():
+    if False:
+        result = messagebox.askquestion("確認", "翻訳シート(編集)のWebサイトを開きます。\nよろしいですか?")
+        if result != "yes":
+            return
+
+    webbrowser.open_new(sheet_url2)
 
 def main():
     global main_win
@@ -459,14 +477,32 @@ def main():
         open_game_web_button.bind("<Enter>", lambda event, h=open_game_web_button: h.configure(fg=hover_fg_color))
         open_game_web_button.bind("<Leave>", lambda event, h=open_game_web_button: h.configure(fg=org_fg_color))
         open_game_web_button.pack()
-    open_tool_web_button = Button(link_frame, text="MODツールのWebサイトを開く", command=open_tool_web, relief=FLAT, cursor="hand2")
-    open_tool_web_button.bind("<Enter>", lambda event, h=open_tool_web_button: h.configure(fg=hover_fg_color))
-    open_tool_web_button.bind("<Leave>", lambda event, h=open_tool_web_button: h.configure(fg=org_fg_color))
-    open_tool_web_button.pack()
-    open_sheet_web_button = Button(link_frame, text="翻訳シートのWebサイトを開く", command=open_sheet_web, relief=FLAT, cursor="hand2")
-    open_sheet_web_button.bind("<Enter>", lambda event, h=open_sheet_web_button: h.configure(fg=hover_fg_color))
-    open_sheet_web_button.bind("<Leave>", lambda event, h=open_sheet_web_button: h.configure(fg=org_fg_color))
-    open_sheet_web_button.pack()
+
+    tool_web_frame = Frame(link_frame)
+    tool_web_frame.pack()
+    open_tool_web1_button = Button(tool_web_frame, text="MODツールのWebサイトを開く", command=open_tool_web1, relief=FLAT, cursor="hand2")
+    open_tool_web1_button.bind("<Enter>", lambda event, h=open_tool_web1_button: h.configure(fg=hover_fg_color))
+    open_tool_web1_button.bind("<Leave>", lambda event, h=open_tool_web1_button: h.configure(fg=org_fg_color))
+    open_tool_web1_button.pack(side=LEFT)
+    tool_web_label = Label(tool_web_frame, text="/")
+    tool_web_label.pack(side=LEFT)
+    open_tool_web2_button = Button(tool_web_frame, text="ヘルプを開く", command=open_tool_web2, relief=FLAT, cursor="hand2")
+    open_tool_web2_button.bind("<Enter>", lambda event, h=open_tool_web2_button: h.configure(fg=hover_fg_color))
+    open_tool_web2_button.bind("<Leave>", lambda event, h=open_tool_web2_button: h.configure(fg=org_fg_color))
+    open_tool_web2_button.pack()
+
+    sheet_web_frame = Frame(link_frame)
+    sheet_web_frame.pack()
+    open_sheet_web1_button = Button(sheet_web_frame, text="翻訳シートのWebサイトを開く(閲覧)", command=open_sheet_web1, relief=FLAT, cursor="hand2")
+    open_sheet_web1_button.bind("<Enter>", lambda event, h=open_sheet_web1_button: h.configure(fg=hover_fg_color))
+    open_sheet_web1_button.bind("<Leave>", lambda event, h=open_sheet_web1_button: h.configure(fg=org_fg_color))
+    open_sheet_web1_button.pack(side=LEFT)
+    sheet_web_label = Label(sheet_web_frame, text="/")
+    sheet_web_label.pack(side=LEFT)
+    open_sheet_web2_button = Button(sheet_web_frame, text="編集で開く", command=open_sheet_web2, relief=FLAT, cursor="hand2")
+    open_sheet_web2_button.bind("<Enter>", lambda event, h=open_sheet_web2_button: h.configure(fg=hover_fg_color))
+    open_sheet_web2_button.bind("<Leave>", lambda event, h=open_sheet_web2_button: h.configure(fg=org_fg_color))
+    open_sheet_web2_button.pack()
 
     # information
     inf_label = Label(main_frame, text="翻訳シート管理人様、翻訳有志諸氏に多大なる感謝を！", fg=inf_fg_color)
