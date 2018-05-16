@@ -6,6 +6,7 @@
 
 import codecs
 import csv
+import re
 import struct
 
 def read_csv(path):
@@ -105,22 +106,48 @@ def write_bin(path, data):
     f.close()
     print("write size: %xh" % len(data))
 
+def get_macros(data):
+    macros = set()
+    for d in data.values():
+        m = set(re.findall("{[a-zA-Z]+}", d))
+        if len(m) > 0:
+            macros.update(m)
+    macros = set(sorted(macros))
+#    print(macros)
+    return macros
+
+def check_macros(macros1, macros2, data):
+    diff = macros2.difference(macros1)
+#    print(diff)
+    if len(diff) > 0:
+        cnt = 0
+        for d in data.values():
+            m = set(re.findall("{[a-zA-Z]+}", d))
+            if len(m) > 0:
+                _m = diff.intersection(m)
+                if len(_m) > 0:
+                    print("error: line=",cnt,", macro=",_m)
+            cnt += 1
+
 def make_ja():
     data = read_csv("./out/lang.csv")
     if False:
         en,fr,de,es,pl,ru,zh = split_data(data)
     else:
         en,zh,fr,de,es,pl,ru = split_data(data)
+    macros = get_macros(en)
 
     data2 = read_csv("./data/Frostpunk 翻訳作業所 - 翻訳.csv")
 
     # uninclude Machine Translation
     ja = marge_data(en, data2, 4, 1, -1)
+    check_macros(macros, get_macros(ja), ja)
 #    write_txt("./out/japanese.txt", ja)
     write_bin("./out/japanese.lang", make_lang(ja))
 
     # include Machine Translation
     ja = marge_data(en, data2, 4, 1, 2)
+#    check_macros(macros, get_macros(ja), ja)
 #    write_txt("./out/japanese_wmt.txt", ja)
     write_bin("./out/japanese_wmt.lang", make_lang(ja))
 
