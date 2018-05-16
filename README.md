@@ -13,8 +13,8 @@ decode/encode binfont file
 lang言語ファイルをデコード/エンコードします。<br>
 decode/encode lang file
 ### [general](https://github.com/atoring/frostpunk_mod/tree/master/general)
-GUIの総合MODツールです。[説明](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)<br>
-general mod tool of GUI
+GUIの総合MODツールです。日本語パッチ用です。[説明](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)<br>
+GUI general mod tool for patch japanese
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
 There are also [executable binaries](https://github.com/atoring/frostpunk_mod/releases), but it may not be latest on the release timing.
