@@ -8,6 +8,7 @@ import codecs
 import csv
 import re
 import struct
+from janome.tokenizer import Tokenizer  # see: http://mocobeta.github.io/janome/
 
 def read_csv(path):
     print("read file: %s" % path)
@@ -49,15 +50,9 @@ def marge_data(data1, data2, skip, index1, index2):
         if cnt >= len(data2):
             break
         if data2[cnt][index1] != "":
-            _d = data2[cnt][index1]
-            _d = _d.replace("、", "，")   # quick hack for automatic new line
-            strs[d] = _d
+            strs[d] = data2[cnt][index1]
         elif "{" not in data1[d] and index2>=0 and data2[cnt][index2]!="":
-            _d = data2[cnt][index2]
-            _d = _d.replace("、", "，")   # quick hack for automatic new line
-            _d = _d.replace("</ n>", "\n")  # fix google translation's broken new line
-            _d = _d.replace("</ N>", "\n")  # fix google translation's broken new line
-            strs[d] = _d
+            strs[d] = data2[cnt][index2]
         else:
             strs[d] = data1[d]
         cnt += 1
@@ -74,8 +69,7 @@ def write_txt(path, data):
         quit()
     for d in data.keys():
         f.write("%s\n" % d)
-        _d = data[d].replace("</n>", "\n") # for Frostpunk LANG Tool
-        f.write("%s\n" % _d)
+        f.write("%s\n" % data[d])
     f.close()
     print("write len: %d" % len(data))
 
@@ -88,8 +82,7 @@ def make_lang(data):
                 data[d] = "日本語"
         bin.extend(struct.pack("<H", len(d)))
         bin.extend(d.encode("ascii"))
-        _d = data[d].replace("</n>", "\n")  # compatible with Frostpunk LANG Tool
-        _d = _d.replace(r"<\n>", "\n")      # expansion for ja sheet
+        _d = data[d]
         bin.extend(struct.pack("<H", len(_d)))
         bin.extend(_d.encode("utf_16_le"))
     bin[:4] = struct.pack("<I", len(bin)-4)
@@ -109,9 +102,7 @@ def write_bin(path, data):
 def get_macros(data):
     macros = set()
     for d in data.values():
-        m = set(re.findall("{[a-zA-Z]+}", d))
-        if len(m) > 0:
-            macros.update(m)
+        macros.update(set(re.findall(r"({.*?}|\|.*?\|)", d)))
     macros = set(sorted(macros))
 #    print(macros)
     return macros
@@ -120,16 +111,120 @@ def check_macros(macros1, macros2, data):
     diff = macros2.difference(macros1)
 #    print(diff)
     if len(diff) > 0:
+        fnd = False
         cnt = 2
         for d in data.values():
-            m = set(re.findall("{[a-zA-Z]+}", d))
-            if len(m) > 0:
-                _m = diff.intersection(m)
-                if len(_m) > 0:
-                    print("error: line=",cnt,", macro=",_m)
+            if cnt != 2237:
+                m = set(re.findall(r"({.*?}|\|.*?\|)", d))
+                if len(m) > 0:
+                    _m = diff.intersection(m)
+                    if len(_m) > 0:
+                        print("error: line=",cnt,", macro=",_m)
+                        fnd = True
             cnt += 1
-        print("### 翻訳シートにマクロエラーがありました。翻訳シートを修正してください。 ###")
+        if fnd:
+            print("### 翻訳シートにマクロエラーがありました。翻訳シートを修正してください。 ###")
+            input("何かキーを入力してください。")
+
+def check_exmacros(data):
+    fnd = False
+    cnt = 2
+    for d in data.values():
+        if cnt != 270:
+            if re.search("<", d):
+                print("error: line=",cnt,", ",d)
+                fnd = True
+        cnt += 1
+    if fnd:
+        print("### 翻訳シートに拡張マクロエラーがありました。翻訳シートを修正してください。 ###")
         input("何かキーを入力してください。")
+
+def fix_data(data):
+    for d in data.keys():
+        _d = data[d]
+        _d = re.sub("[ 　]+", " ", _d)
+        _d = re.sub(r"<[/\][ ]*[nN]>", "\n", _d)    # new line
+        for k,v in {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9",",":"，","、":"，","!":"！","?":"？","：":":","／":"/","（":"(","）":")"}.items():
+            _d = _d.replace(k, v)   # replace
+        if False:
+            for s in ["人","年","月","日","時","分","秒","，","。","！","？","/"]:
+                _d = re.sub("[ ]*%s[ ]*" % s, s, _d)    # reduce length
+            for k,v in {r"\(":"(",r"\)":")"}.items():
+                _d = re.sub("[ ]*%s[ ]*" % k, v, _d)    # reduce length
+        data[d] = _d
+    return data
+
+def get_max_sentence_len(str):
+    str = re.sub("<.*?>", "\n", str)
+    str = re.sub(r"\|.*?\|", "", str)
+    str = re.sub("{.*?}", "00000", str)
+    s = re.split("[\n，。！？]", str)
+#    print(s)
+    l = [len(_s) for _s in s]
+    max = sorted(set(l), reverse=True)[0]
+    return max
+
+def insert_comma(data1, data2):
+    print("日本語を解析して処理しています...")
+    line = 1
+    for d in data1.keys():
+        d1 = data1[d]
+        l1 = get_max_sentence_len(d1)
+        d2 = data2[d]
+        l2 = get_max_sentence_len(d2)
+        line += 1
+        if l1>10 and l2>10 and l1>l2*2.5:
+            print("line: %d" % line)
+            try:
+                re.sub("[！？]", "", d1).encode("ascii")
+            except:
+#                print(d1,d2)
+#                print(l1,l2)
+#                print(d1)
+
+                t = Tokenizer()
+                tokens = t.tokenize(d1)
+#                print("".join([_t.surface for _t in tokens]))
+
+                str = ""
+                jf = False
+                ff = False
+                cnt = 0
+                for token in tokens:
+#                    print(token)
+                    pos = token.part_of_speech.split(',')
+
+                    if jf:
+                        if pos[0]=="名詞" or pos[0]=="動詞":
+#                            if ff and cnt>3:
+                            if cnt > 3:
+                                str += "，"
+#                                str += "//"
+                                cnt = 0
+                            ff = True
+                        jf = False
+
+                    if pos[1]=="係助詞" or pos[1]=="格助詞":
+                        jf = True
+
+                    str += token.surface
+
+                    if pos[0] == "名詞":
+                        try:
+                            token.surface.encode("ascii")
+                        except:
+                            cnt += 1
+                    else:
+                        cnt += 1
+                    if pos[0] == "記号":
+                        ff = False
+                        cnt = 0
+#                        if pos[1]=="読点" or pos[1]=="句点":
+#                            cnt = 0
+
+#                print(str)
+                data1[d] = str
+    return data1
 
 def make_ja():
     data = read_csv("./out/lang.csv")
@@ -143,13 +238,19 @@ def make_ja():
 
     # uninclude Machine Translation
     ja = marge_data(en, data2, 4, 1, -1)
+    ja = fix_data(ja)
+    ja = insert_comma(ja, zh)
     check_macros(macros, get_macros(ja), ja)
+    check_exmacros(ja)
 #    write_txt("./out/japanese.txt", ja)
     write_bin("./out/japanese.lang", make_lang(ja))
 
     # include Machine Translation
     ja = marge_data(en, data2, 4, 1, 2)
+    ja = fix_data(ja)
+    ja = insert_comma(ja, zh)
 #    check_macros(macros, get_macros(ja), ja)
+#    check_exmacros(ja)
 #    write_txt("./out/japanese_wmt.txt", ja)
     write_bin("./out/japanese_wmt.lang", make_lang(ja))
 
