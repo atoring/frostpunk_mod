@@ -155,6 +155,7 @@ def encode():
         tex.extend(d)
     bin.extend(tex)
     bin.extend(struct.pack("<I", len(chrs)))
+    tmp = bytearray()
     for c in chrs:
         id,x,y,w,h,xoffset,yoffset,xadvance,page,chnl = (c["id"],c["x"],c["y"],c["width"],c["height"],c["xoffset"],c["yoffset"],c["xadvance"],c["page"],c["chnl"])
         left = x
@@ -177,7 +178,13 @@ def encode():
                 top += 6
                 if h > 6*2:
                     bottom -= 6
-        bin.extend(struct.pack("<fffffffHH", left,right,top,bottom,_width,offset_left,offset_top,code,tex))
+        # ja patch
+        if code == 0x3001: # 「、」
+            tmp = struct.pack("<fffffffHH", left,right,top,bottom,_width,offset_left,offset_top,0xff0c,tex)
+        if code == 0xff0c: # 「，」
+            bin.extend(tmp)
+        else:
+            bin.extend(struct.pack("<fffffffHH", left,right,top,bottom,_width,offset_left,offset_top,code,tex))
     bin.extend(struct.pack("<fff", 46.25,0.0,7.03125))
 
     write_bin("./out/notosanscjksc-medium.otf.binfont", bin)
