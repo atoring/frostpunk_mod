@@ -19,11 +19,6 @@ GUI general mod tool for patch japanese
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
 There are also [executable binaries](https://github.com/atoring/frostpunk_mod/releases), but it may not be latest on the release timing.
 
-## 生成物 | Data created
-### [日本語フォント | Japanese font](https://github.com/atoring/frostpunk_mod/raw/master/binfont/out/notosanscjksc-medium.otf.binfont.zip)
-既存の中国語文字セットに平仮名、片仮名、記号などを追加したもの<br>
-Font which added hiragana, katakana, symbols etc to the existing Chinese characters
-
 ## 参考画像 | Reference images
 - 2018/05/09現在 (機械翻訳も含まれています)<br>
 <img src="https://user-images.githubusercontent.com/33346100/39788474-98e9f2ec-5365-11e8-88d3-ffe9ccafa5cd.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788602-22fad014-5366-11e8-9f32-11d9a4debbe1.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788612-2ef1cf44-5366-11e8-89d3-be7239305d4e.png" width=25%>
