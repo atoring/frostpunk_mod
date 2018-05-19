@@ -12,7 +12,8 @@ import webbrowser
 
 import version  # version_str
 
-game_url = "https://store.steampowered.com/app/323190/Frostpunk/"
+game_url1 = "http://www.frostpunkgame.com/"
+game_url2 = "https://store.steampowered.com/app/323190/Frostpunk/"
 tool_url1 = "https://github.com/atoring/frostpunk_mod"
 tool_url2 = "https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB"
 sheet_url1 = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/preview#gid=770455416"
@@ -339,44 +340,22 @@ def open_lang():
     open_csv(path)
 
 # link
-def open_game_web():
-    if False:
-        result = messagebox.askquestion("確認", "FrostpunkのWebサイトを開きます。\nよろしいですか?")
-        if result != "yes":
-            return
+def open_game_web1():
+    webbrowser.open_new(game_url1)
 
-    webbrowser.open_new(game_url)
+def open_game_web2():
+    webbrowser.open_new(game_url2)
 
 def open_tool_web1():
-    if False:
-        result = messagebox.askquestion("確認", "MODツールのWebサイトを開きます。\nよろしいですか?")
-        if result != "yes":
-            return
-
     webbrowser.open_new(tool_url1)
 
 def open_tool_web2():
-    if False:
-        result = messagebox.askquestion("確認", "ヘルプを開きます。\nよろしいですか?")
-        if result != "yes":
-            return
-
     webbrowser.open_new(tool_url2)
 
 def open_sheet_web1():
-    if False:
-        result = messagebox.askquestion("確認", "翻訳シート(閲覧)のWebサイトを開きます。\nよろしいですか?")
-        if result != "yes":
-            return
-
     webbrowser.open_new(sheet_url1)
 
 def open_sheet_web2():
-    if False:
-        result = messagebox.askquestion("確認", "翻訳シート(編集)のWebサイトを開きます。\nよろしいですか?")
-        if result != "yes":
-            return
-
     webbrowser.open_new(sheet_url2)
 
 def main():
@@ -392,7 +371,7 @@ def main():
     # main window
     main_win = Tk()
     main_win.title("Frostpunk用総合MODツール")
-    main_win.geometry("380x510")
+    main_win.geometry("380x535")
     main_win.resizable(0,0)
     main_win.protocol("WM_DELETE_WINDOW", on_closing)
     center(main_win)
@@ -419,15 +398,19 @@ def main():
     open_game_dlg_button.bind("<Enter>", lambda event, h=open_game_dlg_button: h.configure(fg=hover_fg_color))
     open_game_dlg_button.bind("<Leave>", lambda event, h=open_game_dlg_button: h.configure(fg=org_fg_color))
     open_game_dlg_button.pack()
-    open_game_explorer_button = Button(config_frame, text="ゲームフォルダを開く", command=open_game_explorer, relief=FLAT, cursor="hand2")
+
+    game_frame = Frame(config_frame)
+    game_frame.pack()
+    exec_game_button = Button(game_frame, text="ゲームを起動", command=exec_game, relief=FLAT, cursor="hand2")
+    exec_game_button.bind("<Enter>", lambda event, h=exec_game_button: h.configure(fg=hover_fg_color))
+    exec_game_button.bind("<Leave>", lambda event, h=exec_game_button: h.configure(fg=org_fg_color))
+    exec_game_button.pack(side=LEFT)
+    game_label = Label(game_frame, text="/")
+    game_label.pack(side=LEFT)
+    open_game_explorer_button = Button(game_frame, text="ゲームフォルダを開く", command=open_game_explorer, relief=FLAT, cursor="hand2")
     open_game_explorer_button.bind("<Enter>", lambda event, h=open_game_explorer_button: h.configure(fg=hover_fg_color))
     open_game_explorer_button.bind("<Leave>", lambda event, h=open_game_explorer_button: h.configure(fg=org_fg_color))
     open_game_explorer_button.pack()
-    if False:
-        exec_game_button = Button(config_frame, text="ゲームを起動", command=exec_game, relief=FLAT, cursor="hand2")
-        exec_game_button.bind("<Enter>", lambda event, h=exec_game_button: h.configure(fg=hover_fg_color))
-        exec_game_button.bind("<Leave>", lambda event, h=exec_game_button: h.configure(fg=org_fg_color))
-        exec_game_button.pack()
 
     # manage data
     manage_data_frame = LabelFrame(main_frame, text="データ管理")
@@ -472,11 +455,18 @@ def main():
     # link
     link_frame = LabelFrame(main_frame, text="Webサイト")
     link_frame.pack(padx=12,pady=4,ipadx=12,ipady=4, fill=X)
-    if False:
-        open_game_web_button = Button(link_frame, text="FrostpunkのWebサイトを開く", command=open_game_web, relief=FLAT, cursor="hand2")
-        open_game_web_button.bind("<Enter>", lambda event, h=open_game_web_button: h.configure(fg=hover_fg_color))
-        open_game_web_button.bind("<Leave>", lambda event, h=open_game_web_button: h.configure(fg=org_fg_color))
-        open_game_web_button.pack()
+    game_web_frame = Frame(link_frame)
+    game_web_frame.pack()
+    open_game_web1_button = Button(game_web_frame, text="Frostpunkの公式Webサイトを開く", command=open_game_web1, relief=FLAT, cursor="hand2")
+    open_game_web1_button.bind("<Enter>", lambda event, h=open_game_web1_button: h.configure(fg=hover_fg_color))
+    open_game_web1_button.bind("<Leave>", lambda event, h=open_game_web1_button: h.configure(fg=org_fg_color))
+    open_game_web1_button.pack(side=LEFT)
+    game_web_label = Label(game_web_frame, text="/")
+    game_web_label.pack(side=LEFT)
+    open_game_web2_button = Button(game_web_frame, text="SteamのWebサイトを開く", command=open_game_web2, relief=FLAT, cursor="hand2")
+    open_game_web2_button.bind("<Enter>", lambda event, h=open_game_web2_button: h.configure(fg=hover_fg_color))
+    open_game_web2_button.bind("<Leave>", lambda event, h=open_game_web2_button: h.configure(fg=org_fg_color))
+    open_game_web2_button.pack()
 
     tool_web_frame = Frame(link_frame)
     tool_web_frame.pack()
