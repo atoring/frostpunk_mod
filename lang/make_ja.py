@@ -144,7 +144,7 @@ def fix_data(data):
         _d = data[d]
         _d = re.sub("[ 　]+", " ", _d)
         _d = re.sub(r"<[/\][ ]*[nN]>", "\n", _d)    # new line
-        for k,v in {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9",",":"，","、":"，","!":"！","?":"？","：":":","／":"/","（":"(","）":")"}.items():
+        for k,v in {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9",",":"、","，":"、","、":"、，","!":"！","?":"？","：":":","／":"/","（":"(","）":")"}.items():
             _d = _d.replace(k, v)   # replace
         if False:
             for s in ["人","年","月","日","時","分","秒","，","。","！","？","/"]:
@@ -166,63 +166,37 @@ def get_max_sentence_len(str):
 
 def insert_comma(data1, data2):
     print("日本語を解析して処理しています...")
-    line = 1
+    t = Tokenizer()
+    cnt = 0
+    total = len(data1)
+    step = total/10
+    step_cnt = 0
     for d in data1.keys():
         d1 = data1[d]
         l1 = get_max_sentence_len(d1)
         d2 = data2[d]
         l2 = get_max_sentence_len(d2)
-        line += 1
-        if l1>10 and l2>10 and l1>l2*2.5:
-            print("line: %d" % line)
+        cnt += 1
+        step_cnt += 1
+        if step_cnt >= step:
+            step_cnt -= step
+            print("%d%%" % (100*cnt//total))
+        if l1>4 and l1>l2:
             try:
                 re.sub("[！？]", "", d1).encode("ascii")
             except:
-#                print(d1,d2)
-#                print(l1,l2)
-#                print(d1)
-
-                t = Tokenizer()
                 tokens = t.tokenize(d1)
-#                print("".join([_t.surface for _t in tokens]))
-
                 str = ""
                 jf = False
-                ff = False
-                cnt = 0
                 for token in tokens:
-#                    print(token)
                     pos = token.part_of_speech.split(',')
-
                     if jf:
-                        if pos[0]=="名詞" or pos[0]=="動詞":
-#                            if ff and cnt>3:
-                            if cnt > 3:
-                                str += "，"
-#                                str += "//"
-                                cnt = 0
-                            ff = True
+                        if pos[0]!="助詞" and pos[1]!="読点" and pos[1]!="句点":
+                            str += "，"
                         jf = False
-
                     if pos[1]=="係助詞" or pos[1]=="格助詞":
                         jf = True
-
                     str += token.surface
-
-                    if pos[0] == "名詞":
-                        try:
-                            token.surface.encode("ascii")
-                        except:
-                            cnt += 1
-                    else:
-                        cnt += 1
-                    if pos[0] == "記号":
-                        ff = False
-                        cnt = 0
-#                        if pos[1]=="読点" or pos[1]=="句点":
-#                            cnt = 0
-
-#                print(str)
                 data1[d] = str
     return data1
 
