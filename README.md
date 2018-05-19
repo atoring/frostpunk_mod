@@ -3,6 +3,9 @@
 Mod Tools for [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)
 
 ## ツール | Tools
+### [general](https://github.com/atoring/frostpunk_mod/tree/master/general)
+GUIの総合MODツールです。日本語パッチ用です。[説明](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)<br>
+GUI general mod tool for patch japanese
 ### [dat](https://github.com/atoring/frostpunk_mod/tree/master/dat)
 dat+idxアーカイブファイルを展開分割/圧縮結合します。<br>
 unpack/pack dat+idx archive file
@@ -12,9 +15,6 @@ decode/encode binfont file
 ### [lang](https://github.com/atoring/frostpunk_mod/tree/master/lang)
 lang言語ファイルをデコード/エンコードします。<br>
 decode/encode lang file
-### [general](https://github.com/atoring/frostpunk_mod/tree/master/general)
-GUIの総合MODツールです。日本語パッチ用です。[説明](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)<br>
-GUI general mod tool for patch japanese
 
 [実行バイナリ](https://github.com/atoring/frostpunk_mod/releases)もありますが、リリースタイミングにより最新のものではないかもしれません。<br>
 There are also [executable binaries](https://github.com/atoring/frostpunk_mod/releases), but it may not be latest on the release timing.
