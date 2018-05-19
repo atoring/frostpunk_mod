@@ -14,8 +14,6 @@ for %%f in (..\dat\*.exe) do copy %%f tmp\dat
 for %%f in (..\binfont\*.exe) do copy %%f tmp\binfont
 for %%f in (..\lang\*.exe) do copy %%f tmp\lang
 for %%f in (..\general\*.exe) do copy %%f tmp\general
-mkdir tmp\lang\sysdic
-copy ..\lang\sysdic\*.* tmp\lang\sysdic
 
 set d=%date:/=%
 set t=%time: =0%
