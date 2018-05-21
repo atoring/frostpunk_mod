@@ -4,123 +4,79 @@
 # ./data/font*.*をエンコードして./out/notosanscjksc-medium.otf.binfontを生成します。
 # フォントサイズやオフセットなど使用フォントにより調整する必要があります。
 
+# for https://github.com/libgdx/libgdx/wiki/Hiero
+# https://github.com/libgdx/libgdx/wiki/Distance-field-fonts
+
+import codecs
+import re
 import struct
 from PIL import Image
 
-def read_bin(path):
+def read_txt(path):
     print("read file: %s" % path)
     try:
-        f = open(path, "rb")
+        f = codecs.open(path, "r", "cp932")
     except IOError:
         print("error: file open error: %s" % path)
         quit()
-    data = f.read()
+    data = f.readlines()
     f.close()
-    print("read size: %xh" % len(data))
+    print("read lines: %d" % len(data))
     return data
 
-def read_fnt(path):
-    bin = read_bin(path)
+def read_fnt_txt(path):
+    data = read_txt(path)
 
-    # see: http://www.angelcode.com/products/bmfont/doc/file_format.html
-    # head
-    magic = struct.unpack("<BBB", bin[:3])
-    print("magic: %02xh,%02xh,%02xh" % (magic[0],magic[1],magic[2]))
-    if magic != (0x42,0x4d,0x46):   # "BMF"
-        print("error: magic")
-        quit()
-    ver = struct.unpack("B", bin[3:4])[0]
-    print("ver: %d" % ver)
-    if ver != 3:
-        print("error: ver")
-        quit()
+    _pageNames = {}
+    _chars = {}
+    for str in data:
+        str = str.rstrip("\r\n")
+#        print(str)
 
-    # block
-    offset = 4
-    while offset < len(bin):
-        blockId,blockSize = struct.unpack("<BI", bin[offset:offset+5])
-        offset += 5
-        block_offset = offset
-        print("blockId: %xh" % blockId)
-        print("blockSize: %d" % blockSize)
+        m = re.search('^page[ ]+id=([0-9]+)[ ]+file="(.+)"$', str)
+        if m:
+            id = int(m.group(1))
+            file = m.group(2)
+            _pageNames[id] = file
+            print("pageNames: %d=\"%s\"" % (id,file))
 
-        # Block type 1: info
-        if blockId == 1:
-            fontSize,bitField,charSet,stretchH,aa,paddingUp,paddingRight,paddingDown,paddingLeft,spacingHoriz,spacingVert,outline = struct.unpack("<HBBHBBBBBBBB", bin[offset:offset+14])
-            offset += 14
-            print("fontSize: %d" % fontSize)
-            print("bitField: %xh" % bitField)
-            print("charSet: %d" % charSet)
-            print("stretchH: %d" % stretchH)
-            print("aa: %d" % aa)
-            print("paddingUp: %d" % paddingUp)
-            print("paddingRight: %d" % paddingRight)
-            print("paddingDown: %d" % paddingDown)
-            print("paddingLeft: %d" % paddingLeft)
-            print("spacingHoriz: %d" % spacingHoriz)
-            print("spacingVert: %d" % spacingVert)
-            print("outline: %d" % outline)
-            fontName = bin[offset:].split(b"\0")[0].decode("ascii")
-            print("fontName: \"%s\"" % fontName)
-
-        # Block type 2: common
-        if blockId == 2:
-            lineHeight,base,scaleW,scaleH,pages,bitField,alphaChnl,redChnl,greenChnl,blueChnl = struct.unpack("<HHHHHBBBBB", bin[offset:offset+15])
-            print("lineHeight: %d" % lineHeight)
-            print("base: %d" % base)
-            print("scaleW: %d" % scaleW)
-            print("scaleH: %d" % scaleH)
-            print("pages: %d" % pages)
-            print("bitField: %xh" % bitField)
-            print("alphaChnl: %d" % alphaChnl)
-            print("redChnl: %d" % redChnl)
-            print("greenChnl: %d" % greenChnl)
-            print("blueChnl: %d" % blueChnl)
-
-        # Block type 3: pages
-        if blockId == 3:
-            p = bin[offset:].split(b"\0")
-            pageNames = []
-            for i in range(pages):
-                _p = p[i].decode("ascii")
-                pageNames.append(_p)
-                print("pageNames: \"%s\"" % _p)
-
-        # Block type 4: chars
-        if blockId == 4:
-            numChars = blockSize//20
+        m = re.search("^chars[ ]+count=([0-9]+)$", str)
+        if m:
+            numChars = int(m.group(1))
             print("numChars: %d" % numChars)
-            chars = []
-            for i in range(numChars):
-                id,x,y,width,height,xoffset,yoffset,xadvance,page,chnl = struct.unpack("<IHHHHhhhBB", bin[offset:offset+20])
-                chars.append({"id":id,"x":x,"y":y,"width":width,"height":height,"xoffset":xoffset,"yoffset":yoffset,"xadvance":xadvance,"page":page,"chnl":chnl})
-                offset += 20
 
-        # Block type 5: kerning pairs
-        if blockId == 5:
-            numKers = blockSize//10
-            print("numKers: %d" % numKers)
-            kers = []
-            for i in range(numKers):
-                first,second,amount = struct.unpack("<IIh", bin[offset:offset+10])
-                kers.append({"first":first,"second":second,"amount":amount})
-                offset += 10
+        m = re.search(r"^char[ ]+id=([0-9]+)[ ]+x=([0-9]+)[ ]+y=([0-9]+)[ ]+width=([0-9]+)[ ]+height=([0-9]+)[ ]+xoffset=([0-9\-]+)[ ]+yoffset=([0-9\-]+)[ ]+xadvance=([0-9]+)[ ]+page=([0-9]+)[ ]+chnl=([0-9]+)[ ]+$", str)
+        if m:
+            id,x,y,width,height,xoffset,yoffset,xadvance,page,chnl = tuple(int(s) for s in m.groups())
+            _chars[id] = {"id":id,"x":x,"y":y,"width":width,"height":height,"xoffset":xoffset,"yoffset":yoffset,"xadvance":xadvance,"page":page,"chnl":chnl}
 
-        offset = block_offset + blockSize
-
+    pageNames = [_pageNames[k] for k in sorted(_pageNames.keys())]
+    chars = [_chars[k] for k in sorted(_chars.keys())]
     return pageNames, chars
 
-def read_png(path):
-    print("read file: %s" % path)
-    img = Image.open(path).convert("RGBA")
-    width = img.width
+def read_pngs(base, path, width, height):
     print("width: %d" % width)
-    height = img.height
     print("height: %d" % height)
+
+    img = Image.new("RGBA", (width,height))
+    pos = [(0,0),(width//2,0),(0,height//2),(width//2,height//2)]
+    cnt = 0
+    for p in path:
+        _path = "%s%s" % (base,p)
+        print("read file: %s" % _path)
+        _img = Image.open(_path)
+        if _img.size != (width//2,height//2):
+            print("error: image size")
+            print(_img.size)
+            quit()
+        img.paste(_img, pos[cnt])
+        cnt += 1
+
     if True:    # fix
         r,g,b,a = img.split()
         z = a.point(lambda p:0)
-        img = Image.merge("RGBA", (r,g,b,z))
+        img = Image.merge("RGBA", (a,a,a,z))
+
     data = img.tobytes()
     print("size: %xh" % len(data))
     return width, height, data
@@ -138,25 +94,43 @@ def write_bin(path, data):
 
 def encode():
     width = 4096
+    height = 4096
     bpp = 32
-    tex_file,chrs = read_fnt("./data/font.fnt")
+    tex_file,chrs = read_fnt_txt("./data/font.fnt")
 
     bin = bytearray()
     magic,ver,texs = (0x35150f8a,9,len(tex_file))
-    bin.extend(struct.pack("<III", magic,ver,texs))
+    _texs = (texs+3)//4
+    bin.extend(struct.pack("<III", magic,ver,_texs))
+
     tex = bytearray()
-    for t in tex_file:
-#        w,h,d = read_png("./data/%s" % t)
-        w,h,d = read_png("./out/%s" % t)
-        if w != width:
-            print("error: width")
+    for i in range(_texs):
+        print("tex group: %d" % i)
+        w,h,d = read_pngs("./data/", tex_file[i*4:(i+1)*4], width, height)
+        if w!=width or h!=height:
+            print("error: size")
             quit()
         bin.extend(struct.pack("<I", h))
         tex.extend(d)
     bin.extend(tex)
+
     bin.extend(struct.pack("<I", len(chrs)))
     for c in chrs:
         id,x,y,w,h,xoffset,yoffset,xadvance,page,chnl = (c["id"],c["x"],c["y"],c["width"],c["height"],c["xoffset"],c["yoffset"],c["xadvance"],c["page"],c["chnl"])
+
+        if True:    # fix
+            p = 8
+            xadvance -= p*2
+
+        if page%4 == 1:
+            x += width//2
+        if page%4 == 2:
+            y += height//2
+        if page%4 == 3:
+            x += width//2
+            y += height//2
+        page //= 4
+
         left = x
         right = x+w
         top = y
@@ -166,17 +140,30 @@ def encode():
         offset_top = yoffset
         code = id
         tex = page
-        if True:    # fix
-            if w > 3:
-                offset_left += 3
-                left += 3
-                if w > 3*2:
-                    right -= 3
-            if h > 6:
-                offset_top += 6
-                top += 6
-                if h > 6*2:
-                    bottom -= 6
+
+        if False:    # fix
+            p = 3
+            if w > p:
+                offset_left += p
+                left += p
+                if w > p*2:
+                    right -= p
+            p = 6
+            if h > p:
+                offset_top += p
+                top += p
+                if h > p*2:
+                    bottom -= p
+
+        if False:    # fix
+            p = 12
+            left -= p
+            right += p
+            top -= p
+            bottom += p
+            offset_left += p
+            offset_top += p
+
         # ja patch
         if code == 0xff0c: # 「，」
             bin.extend(struct.pack("<fffffffHH", 0,0,0,0, 0,0,0, code,0xffff))
