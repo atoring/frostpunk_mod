@@ -6,12 +6,17 @@ import os
 import urllib.request
 
 from common import *
+import archive
+import backup
 
 _sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/export?format=csv&gid=2068465123"
-_sheet_path = "./data"
+_sheet_path = "data"
 _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 
-_lang_path  = "./data"
+_comn_file  = "common"
+_local_file = "localizations"
+
+_lang_path  = "data"
 _lang_file  = "lang.csv"
 
 class Sheet():
@@ -61,10 +66,18 @@ class Patch():
     def patch_font(self):
         "patch font file"
         log("patch font file")
+        bk = backup.Backup()
+        bpath = bk.backup_path
+        path = os.path.join(bpath, _comn_file)
+        arc = archive.Archive()
+        if not arc.read_archive(path):
+            return False
+        return True
 
     def patch_lang(self):
         "patch lang file"
         log("patch lang file")
+        return False
 
     @property
     def lang_exists(self):

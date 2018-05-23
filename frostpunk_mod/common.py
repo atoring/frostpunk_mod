@@ -5,6 +5,8 @@ import codecs
 import datetime
 #import logging
 import os
+from pprint import pprint
+import shutil
 import sys
 
 __prog_path     = None
@@ -22,11 +24,12 @@ def log(*args):
     if __log_func:
         __log_func(args)
     else:
-        now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S |")
-        print(now, args)
+        now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        pprint(now)
+        pprint(args)
         if __log_verbose:
             func = sys._getframe(1).f_locals
-            print(func)
+            pprint(func)
 
 def get_prog_path():
     "get path of running script"
@@ -42,9 +45,8 @@ def read_bin(path):
     "read binary data from file"
     log("read binary file", path)
     try:
-        f = open(path, "rb")
-        data = f.read()
-        f.close()
+        with open(path, "rb") as f:
+            data = f.read()
     except IOError:
         log("error", "read binary file", path)
         return None
@@ -55,9 +57,8 @@ def read_txt(path, code=__def_code):
     "read text data from file"
     log("read text file", path)
     try:
-        f = codecs.open(path, "r", code)
-        data = f.readlines()
-        f.close()
+        with codecs.open(path, "r", code) as f:
+            data = f.readlines()
     except IOError:
         log("error", "read text file", path)
         return None
@@ -68,9 +69,8 @@ def write_bin(path, data):
     "write binary data to file"
     log("write binary file", path)
     try:
-        f = open(path, "wb")
-        f.write(data)
-        f.close()
+        with open(path, "wb") as f:
+            f.write(data)
     except IOError:
         log("error", "write binary file", path)
         return False
@@ -81,13 +81,15 @@ def write_txt(path, data, code=__def_code):
     "write text data to file"
     log("write text file", path)
     try:
-        f = codecs.open(path, "w", code)
-        f.write(data)
-        f.close()
+        with codecs.open(path, "w", code) as f:
+            f.write(data)
     except IOError:
         log("error", "write text file", path)
         return False
-    log("write text size", "%xh" % len(data))
+    if isinstance(data, str) or isinstance(data, bytes):
+        log("write text size", "%xh" % len(data))
+    else:
+        log("write text lines", "%d" % len(data))
     return True
 
 def make_dir(path):

@@ -11,5 +11,5 @@ def main():
     gui.main()
     log("end")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

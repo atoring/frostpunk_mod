@@ -21,7 +21,7 @@ _tool_url2  = "https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88M
 _sheet_url1 = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/htmlview#"
 _sheet_url2 = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/edit#gid=770455416"
 
-_config_path        = "./config.ini"
+_config_path        = "config.ini"
 _config_code        = "utf-8-sig"
 _config_sec         = "config"
 _config_game_path   = "game_path"
@@ -425,17 +425,53 @@ class Patch():
         "constructor"
         self.frame          = LabelFrame(master, text="パッチ")
 
-        self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応", command=self.patch_font)
-        self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応", command=self.patch_lang)
+        self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応", command=lambda arg=master: self.patch_font(arg))
+        self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応", command=lambda arg=master: self.patch_lang(arg))
         self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(.csv)を開く", command=self.open_lang)
 
-    def patch_font(self):
+    def patch_font(self, master):
         "patch font"
         log("patch font")
+        path = master.config.game_path
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        bk = backup.Backup()
+        if not bk.exists:
+            error_msg("バックアップデータがありません。\n一度バックアップをする必要があります。")
+            return
+        ret = question_msg("フォントパッチを適応します。若干時間が掛かります。\nよろしいですか?", risk=True)
+        if ret != "yes":
+            return
+        patch = patch_japanese.Patch()
+        if patch.patch_font():
+            info_msg("フォントパッチを適応しました。")
+        else:
+            error_msg("フォントパッチを適応できませんでした。")
 
-    def patch_lang(self):
+    def patch_lang(self, master):
         "patch lang"
         log("patch lang")
+        path = master.config.game_path
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        bk = backup.Backup()
+        if not bk.exists:
+            error_msg("バックアップデータがありません。\n一度バックアップをする必要があります。")
+            return
+        sheet = patch_japanese.Sheet()
+        if not sheet.exists:
+            error_msg("翻訳シートがありません。\n一度ダウンロードする必要があります。")
+            return
+        ret = question_msg("翻訳パッチを適応します。若干時間が掛かります。\nよろしいですか?", risk=True)
+        if ret != "yes":
+            return
+        patch = patch_japanese.Patch()
+        if patch.patch_lang():
+            info_msg("翻訳パッチを適応しました。")
+        else:
+            error_msg("翻訳パッチを適応できませんでした。")
 
     def open_lang(self):
         "open lang .csv sheet"

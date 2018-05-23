@@ -2,11 +2,10 @@
 # coding: utf-8
 
 import os
-import shutil
 
 from common import *
 
-_backup_path = "./backup"
+_backup_path = "backup"
 _backup_files = [
     "common.idx",
     "common.dat",
