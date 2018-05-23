@@ -11,6 +11,7 @@ import webbrowser
 
 from common import *
 import backup
+import patch_japanese
 import version
 
 _game_url1  = "http://www.frostpunkgame.com/"
@@ -75,7 +76,15 @@ def exec_path(path, cur_path):
     log("execute program", path, cur_path)
     path = correct_path(path)
     cur_path = correct_path(cur_path)
-    subprocess.Popen([path], cwd=cur_path)
+    if check_path(path) and check_path(cur_path):
+        subprocess.Popen([path], cwd=cur_path)
+
+def open_csv(path):
+    "execute .csv program"
+    log("execute .csv program", path)
+    path = correct_path(path)
+    if check_path(path):
+        subprocess.Popen(["start", "", path], shell=True)
 
 def open_web_site(url):
     "open web site"
@@ -108,25 +117,26 @@ class ConfigFile():
 
     def __init__(self, path=_config_path, code=_config_code, sec=_config_sec):
         "constructor"
-        self.path = path
-        self.code = code
-        self.sec = sec
+        path = os.path.join(get_prog_path(), path)
+        self.path   = correct_path(path)
+        self.code   = code
+        self.sec    = sec
 
     def read(self, key):
         "read data"
-        log("read config", key)
+        log("read config", self.path, key)
         data = None
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if cfg.has_section(self.sec):
             if cfg.has_option(self.sec, key):
                 data = cfg.get(self.sec, key)
-        log("config file", key, data)
+        log("read", key, data)
         return data
 
     def write(self, key, data):
         "write data"
-        log("write config", key, data)
+        log("write config", self.path, key, data)
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if not cfg.has_section(self.sec):
@@ -136,7 +146,7 @@ class ConfigFile():
 
     def delete(self, key):
         "delete data"
-        log("delete config", key)
+        log("delete config", self.path, key)
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if cfg.has_section(self.sec):
@@ -328,8 +338,8 @@ class ManageData():
         self.backup_btn         = Button(self.frame, text="パッチに関係するデータ(4ファイル)をバックアップ", command=lambda arg=master: self.backup(arg))
         self.restore_btn        = Button(self.frame, risk=True, text="パッチに関係するデータ(4ファイル)をリストア", command=lambda arg=master: self.restore(arg))
         self.open_data_exp_btn  = Button(self.frame, text="バックアップデータフォルダを開く", command=self.open_backup_path)
-        self.download_sheet_btn = Button(self.frame, text="翻訳シート(.csv)をWebサイトからダウンロード")
-        self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(.csv)を開く")
+        self.download_sheet_btn = Button(self.frame, text="翻訳シート(.csv)をWebサイトからダウンロード", command=self.download_sheet)
+        self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(.csv)を開く", command=self.open_sheet)
 
     def backup(self, master):
         "backup data"
@@ -381,11 +391,32 @@ class ManageData():
         if check_path(path):
             open_dir_exp(path)
 
-    """
     def download_sheet(self):
+        "download sheet from web site"
+        log("download sheet")
+        ret = question_msg("翻訳シートをWebサイトからダウンロードします。\nよろしいですか?")
+        if ret != "yes":
+            return
+        sheet = patch_japanese.Sheet()
+        if sheet.exists:
+            ret = question_msg("翻訳シートを上書きします。\nよろしいですか?", risk=True)
+            if ret != "yes":
+                return
+        if sheet.fetch():
+            info_msg("翻訳シートをダウンロードしました。")
+        else:
+            error_msg("翻訳シートをダウンロードできませんでした。")
 
     def open_sheet(self):
-    """
+        "open .csv sheet"
+        log("open .csv sheet")
+        sheet = patch_japanese.Sheet()
+        if not sheet.exists:
+            error_msg("翻訳シートがありません。\n一度ダウンロードする必要があります。")
+            return
+        path = sheet.sheet_path
+        if check_path(path):
+            open_csv(path)
 
 class Patch():
     "patch frame"

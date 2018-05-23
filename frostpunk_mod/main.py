@@ -7,6 +7,7 @@ import gui
 def main():
     "main"
     log("start")
+    log("prog path", get_prog_path())
     gui.main()
     log("end")
 
