@@ -2,9 +2,11 @@
 # coding: utf-8
 
 import codecs
+import datetime
 #import logging
+import sys
 
-__log_func = print
+__log_func = None
 __def_code = "utf-8-sig"
 
 def set_log_func(func):
@@ -14,7 +16,13 @@ def set_log_func(func):
 
 def log(*args):
     "output to log"
-    __log_func(args)
+    if __log_func:
+        __log_func(args)
+    else:
+        now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S |")
+        func = sys._getframe(1).f_locals
+        print(now, args)
+        print(func)
 
 def read_bin(path):
     "read binary data from file"

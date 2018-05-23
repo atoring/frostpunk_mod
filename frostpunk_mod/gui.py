@@ -3,12 +3,14 @@
 
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 import configparser
 import os
 import subprocess
 import webbrowser
 
 from common import *
+import backup
 import version
 
 _game_url1  = "http://www.frostpunkgame.com/"
@@ -27,7 +29,7 @@ _def_game_path1     = r"C:\Program Files (x86)\Steam\SteamApps\common\Frostpunk"
 _def_game_path2     = r"C:\Program Files\Steam\SteamApps\common\Frostpunk"
 _game_exe           = "Frostpunk.exe"
 
-_win_size           = "380x535"
+_win_size           = "420x535"
 _win_frame_col      = "gray"
 _version_fg_col     = "darkblue"
 _inf_fg_col         = "darkgreen"
@@ -36,20 +38,48 @@ _hover_risk_fg_col  = "red"
 _risk_fg_col        = "darkred"
 _hover_cur          = "hand2"
 
+def info_msg(text):
+    "open information message box"
+    log("info_msg", text)
+    return messagebox.showinfo("情報", text)
+
+def warning_msg(text):
+    "open warning message box"
+    log("warning_msg", text)
+    return messagebox.showwarning("警告", text)
+
+def error_msg(text):
+    "open error message box"
+    log("error_msg", text)
+    return messagebox.showerror("エラー", text)
+
+def question_msg(text, risk=False):
+    "open question message box"
+    log("question_msg", text, risk)
+    if risk:
+        ret = messagebox.askquestion("確認", text, icon="warning")
+    else:
+        ret = messagebox.askquestion("確認", text)
+    log("selected", ret)
+    return ret
+
 def open_dir_exp(path):
     "execute explorer"
+    log("execute explorer", path)
     path = correct_path(path)
     if check_path(path):
         subprocess.Popen(["explorer", path])
 
 def exec_path(path, cur_path):
     "execute program"
+    log("execute program", path, cur_path)
     path = correct_path(path)
     cur_path = correct_path(cur_path)
     subprocess.Popen([path], cwd=cur_path)
 
 def open_web_site(url):
     "open web site"
+    log("open web", url)
     webbrowser.open_new(url)
 
 def correct_path(path):
@@ -84,17 +114,19 @@ class ConfigFile():
 
     def read(self, key):
         "read data"
+        log("read config", key)
+        data = None
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if cfg.has_section(self.sec):
             if cfg.has_option(self.sec, key):
                 data = cfg.get(self.sec, key)
-                if data:
-                    return data
-        return None
+        log("config file", key, data)
+        return data
 
     def write(self, key, data):
         "write data"
+        log("write config", key, data)
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if not cfg.has_section(self.sec):
@@ -104,6 +136,7 @@ class ConfigFile():
 
     def delete(self, key):
         "delete data"
+        log("delete config", key)
         cfg = configparser.ConfigParser()
         cfg.read(self.path, self.code)
         if cfg.has_section(self.sec):
@@ -198,7 +231,7 @@ class Entry(tk.Entry):
         "constructor"
         super().__init__(master, cnf, **kw)
         self["relief"]  = tk.FLAT
-        self["width"]   = 40
+        self["width"]   = 42
         if text:
             self.text = text
         self.pack(side=tk.LEFT)
@@ -237,9 +270,9 @@ class Config():
         self.open_game_dlg_btn  = LButton(self.game_path_frame, text="...", command=self.open_game_dlg)
 
         self.game_misc_frame    = Frame(self.frame)
-        self.exec_game_btn      = LButton(self.game_misc_frame, text="ゲームを起動")
+        self.exec_game_btn      = LButton(self.game_misc_frame, text="ゲームを起動", command=self.exec_game)
         self.game_misc_sep      = Separator(self.game_misc_frame)
-        self.open_game_exp_btn  = LButton(self.game_misc_frame, text="ゲームフォルダを開く", command=self.open_game_exp)
+        self.open_game_exp_btn  = LButton(self.game_misc_frame, text="ゲームフォルダを開く", command=self.open_game_path)
 
     @property
     def game_path(self):
@@ -260,22 +293,30 @@ class Config():
 
     def open_game_dlg(self):
         "open directory dialog for game path"
+        log("open dir dialog")
         path = filedialog.askdirectory(initialdir=self.game_path)
+        log("selected", path)
         if path:
             self.game_path = path
 
     def exec_game(self):
         "execute game"
+        log("execute game")
         path = self.game_path
-        if path:
-            exe_path = os.path.join(path, _game_exe)
-            exec_path(exe_path, path)
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        exe_path = os.path.join(path, _game_exe)
+        exec_path(exe_path, path)
 
-    def open_game_exp(self):
+    def open_game_path(self):
         "open game path"
+        log("open game path")
         path = self.game_path
-        if path:
-            open_dir_exp(path)
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        open_dir_exp(path)
 
 class ManageData():
     "manage data frame"
@@ -284,19 +325,63 @@ class ManageData():
         "constructor"
         self.frame              = LabelFrame(master, text="データ管理")
 
-        self.backup_btn         = Button(self.frame, text="パッチに関係するデータ(4ファイル)をバックアップ")
-        self.restore_btn        = Button(self.frame, risk=True, text="パッチに関係するデータ(4ファイル)をリストア")
-        self.open_data_exp_btn  = Button(self.frame, text="バックアップデータフォルダを開く")
+        self.backup_btn         = Button(self.frame, text="パッチに関係するデータ(4ファイル)をバックアップ", command=lambda arg=master: self.backup(arg))
+        self.restore_btn        = Button(self.frame, risk=True, text="パッチに関係するデータ(4ファイル)をリストア", command=lambda arg=master: self.restore(arg))
+        self.open_data_exp_btn  = Button(self.frame, text="バックアップデータフォルダを開く", command=self.open_backup_path)
         self.download_sheet_btn = Button(self.frame, text="翻訳シート(.csv)をWebサイトからダウンロード")
         self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(.csv)を開く")
 
+    def backup(self, master):
+        "backup data"
+        log("backup")
+        path = master.config.game_path
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        ret = question_msg("データをバックアップします。\nよろしいですか?")
+        if ret != "yes":
+            return
+        bk = backup.Backup()
+        if bk.exists:
+            ret = question_msg("バックアップデータを上書きします。\nよろしいですか?", risk=True)
+            if ret != "yes":
+                return
+        if bk.backup(path):
+            info_msg('フォルダ"%s"にバックアップしました。' % bk.backup_path)
+        else:
+            error_msg('フォルダ"%s"にバックアップできませんでした。' % bk.backup_path)
+
+    def restore(self, master):
+        "restore data"
+        log("restore")
+        path = master.config.game_path
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        bk = backup.Backup()
+        if not bk.exists:
+            error_msg("バックアップデータがありません。")
+            return
+        ret = question_msg("データをリストアします。\nよろしいですか?", risk=True)
+        if ret != "yes":
+            return
+        if bk.restore(path):
+            info_msg('フォルダ"%s"からリストアしました。' % bk.backup_path)
+        else:
+            error_msg('フォルダ"%s"からリストアできませんでした。' % bk.backup_path)
+
+    def open_backup_path(self):
+        "open backup data path"
+        log("open backup path")
+        bk = backup.Backup()
+        if not bk.exists:
+            error_msg("バックアップデータがありません。")
+            return
+        path = bk.backup_path
+        if check_path(path):
+            open_dir_exp(path)
+
     """
-    def backup_data(self):
-
-    def restore_data(self):
-
-    def open_data_exp(self):
-
     def download_sheet(self):
 
     def open_sheet(self):
@@ -358,6 +443,7 @@ class Main(tk.Frame):
 
     def __init__(self, master=None):
         "constructor"
+        self.__game_path = None
         self.__set_window(master)
         super().__init__(master, highlightthickness=1, highlightbackground=_win_frame_col)
         self.pack(padx=4, pady=4, ipadx=20, ipady=20, fill=tk.BOTH)
@@ -394,24 +480,27 @@ class Main(tk.Frame):
 
     def on_closing(self, master):
         "closing event"
+        log("closing")
         self.game_path = self.config.game_path
         master.destroy()
 
     @property
     def game_path(self):
         "get game path from config file"
-        cfg = ConfigFile()
-        return cfg.game_path
+        if not self.__game_path:
+            cfg = ConfigFile()
+            self.__game_path = cfg.game_path
+        return self.__game_path
 
     @game_path.setter
     def game_path(self, path):
         "set game path to config file"
-        cfg = ConfigFile()
-        cfg.game_path = path
+        if not self.__game_path or self.__game_path != path:
+            cfg = ConfigFile()
+            cfg.game_path = path
 
 def main():
     "gui main"
-    log("start: gui_main")
     root = tk.Tk()
     main = Main(root)
     main.mainloop()

@@ -6,8 +6,9 @@ import gui
 
 def main():
     "main"
-    log("start: main")
+    log("start")
     gui.main()
+    log("end")
 
 if __name__ == '__main__':
     main()
