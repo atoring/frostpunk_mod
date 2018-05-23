@@ -425,17 +425,28 @@ class Patch():
         "constructor"
         self.frame          = LabelFrame(master, text="パッチ")
 
-        self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応")
-        self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応")
-        self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(.csv)を開く")
+        self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応", command=self.patch_font)
+        self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応", command=self.patch_lang)
+        self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(.csv)を開く", command=self.open_lang)
 
-    """
     def patch_font(self):
+        "patch font"
+        log("patch font")
 
     def patch_lang(self):
+        "patch lang"
+        log("patch lang")
 
     def open_lang(self):
-    """
+        "open lang .csv sheet"
+        log("open lang .csv sheet")
+        patch = patch_japanese.Patch()
+        if not patch.lang_exists:
+            error_msg("ゲームの翻訳シートがありません。\n一度翻訳パッチを適応する必要があります。")
+            return
+        path = patch.lang_path
+        if check_path(path):
+            open_csv(path)
 
 class Link():
     "link frame"

@@ -11,6 +11,9 @@ _sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81G
 _sheet_path = "./data"
 _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 
+_lang_path  = "./data"
+_lang_file  = "lang.csv"
+
 class Sheet():
     "japanese translation sheet"
 
@@ -41,5 +44,34 @@ class Sheet():
 
     @property
     def sheet_path(self):
-        "get backup path"
+        "get sheet path"
         return self.__sheet_file
+
+class Patch():
+    "patch japanese translation"
+
+    def __init__(self):
+        "constructor"
+        path = os.path.join(get_prog_path(), _lang_path)
+        path = path.replace("/", os.sep)
+        self.__lang_path = path
+        path = os.path.join(path, _lang_file)
+        self.__lang_file = path
+
+    def patch_font(self):
+        "patch font file"
+        log("patch font file")
+
+    def patch_lang(self):
+        "patch lang file"
+        log("patch lang file")
+
+    @property
+    def lang_exists(self):
+        "check exsits lang sheet file"
+        return os.path.isfile(self.__lang_file)
+
+    @property
+    def lang_path(self):
+        "get lang sheet path"
+        return self.__lang_file
