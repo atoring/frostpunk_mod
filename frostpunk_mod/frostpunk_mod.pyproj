@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="archive.py" />
+    <Compile Include="backup.py" />
     <Compile Include="common.py" />
     <Compile Include="font.py" />
     <Compile Include="gui.py" />
