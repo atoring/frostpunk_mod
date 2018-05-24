@@ -7,7 +7,23 @@ import struct
 
 from common import *
 
-font_index  = 0x6b04d7c3
+notosans_font_id    = 0x6b04d7c3
+english_lang_id     = 0x781880b4
+french_lang_id      = 0xf8b11d94
+german_lang_id      = 0x3268a4d1
+spanish_lang_id     = 0x93d6426a
+polish_lang_id      = 0x7d919140
+russian_lang_id     = 0xf2232be3
+chinese_lang_id     = 0xfce49418
+lang_ids = [
+    english_lang_id,
+    french_lang_id,
+    german_lang_id,
+    spanish_lang_id,
+    polish_lang_id,
+    russian_lang_id,
+    chinese_lang_id,
+    ]
 
 index_ext  = ".idx"
 data_ext   = ".dat"

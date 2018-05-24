@@ -14,15 +14,15 @@ _sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81G
 _sheet_path = "data"
 _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 
-_comn_file  = "common"
-_local_file = "localizations"
+_cmn_file   = "common"
+_loc_file   = "localizations"
 
 _font_path      = "data"
 _font_zip_file  = "notosanscjksc-medium.otf.binfont.zip"
 _font_file      = "notosanscjksc-medium.otf.binfont"
 _lang_path      = "data"
 _lang_file      = "lang.csv"
-_temp_path      = ".tmp"
+_tmp_path       = ".tmp"
 
 def read_zip(path, file):
     "read file in zip file"
@@ -87,38 +87,67 @@ class Patch():
         path = os.path.join(path, _lang_file)
         self.__lang_file = path
 
-        path = os.path.join(get_prog_path(), _temp_path)
+        path = os.path.join(get_prog_path(), _tmp_path)
         path = path.replace("/", os.sep)
-        self.__temp_path = path
+        self.__tmp_path = path
 
     def patch_font(self, path):
         "patch font file"
-        log("patch font file")
-        if not make_dir(self.__temp_path):
-            return False
+        log("patch font file", path)
         font = read_zip(self.__font_zip_file, _font_file)
         if not font:
             return False
         bk = backup.Backup()
-        bk_comn_path = os.path.join(bk.backup_path, _comn_file)
-        tmp_comn_path = os.path.join(self.__temp_path, _comn_file)
-        game_comn_path = os.path.join(path, _comn_file)
+        bk_cmn_path = os.path.join(bk.backup_path, _cmn_file)
+        tmp_cmn_path = os.path.join(self.__tmp_path, _cmn_file)
+        game_cmn_path = os.path.join(path, _cmn_file)
         with archive.Archive() as arc:
-            if not arc.read_archive(bk_comn_path):
+            if not arc.read_archive(bk_cmn_path):
                 return False
-            if not arc.set_file(archive.font_index, font):
+            if not arc.set_file(archive.notosans_font_id, font):
                 return False
-            if not arc.write_archive(tmp_comn_path):
+            if not make_dir(self.__tmp_path):
                 return False
-        if not self.__copy_archive(game_comn_path, tmp_comn_path):
-            self.__copy_archive(game_comn_path, bk_comn_path)
+            if not arc.write_archive(tmp_cmn_path):
+                delete_dir(self.__tmp_path)
+                return False
+        if not self.__copy_archive(game_cmn_path, tmp_cmn_path):
+            self.__copy_archive(game_cmn_path, bk_cmn_path)
+            delete_dir(self.__tmp_path)
             return False
-        delete_dir(self.__temp_path)
+        delete_dir(self.__tmp_path)
         return True
 
     def patch_lang(self, path):
         "patch lang file"
-        log("patch lang file")
+        log("patch lang file", path)
+        bk = backup.Backup()
+        bk_loc_path = os.path.join(bk.backup_path, _loc_file)
+        tmp_loc_path = os.path.join(self.__tmp_path, _loc_file)
+        game_loc_path = os.path.join(path, _loc_file)
+        with archive.Archive() as arc:
+            if not arc.read_archive(bk_loc_path):
+                return False
+            lang = {}
+            for id in archive.lang_ids:
+                data = arc.get_file(id)
+                if not data:
+                    return False
+                lang[id] = data
+            # ...
+            for id, data in lang:
+                if not arc.set_file(id, data):
+                    return False
+            if not make_dir(self.__tmp_path):
+                return False
+            if not arc.write_archive(tmp_loc_path):
+                delete_dir(self.__tmp_path)
+                return False
+        if not self.__copy_archive(game_loc_path, tmp_loc_path):
+            self.__copy_archive(game_loc_path, bk_loc_path)
+            delete_dir(self.__tmp_path)
+            return False
+        delete_dir(self.__tmp_path)
         return False
 
     def __copy_archive(self, dst, src):
