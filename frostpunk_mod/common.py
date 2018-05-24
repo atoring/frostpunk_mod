@@ -105,6 +105,20 @@ def make_dir(path):
         return False
     return True
 
+def delete_dir(path):
+    "delete directory"
+    log("delete dir", path)
+    if not os.path.exists(path):
+        log("not exist", path)
+        return True
+    try:
+#        os.rmdir(path)
+        shutil.rmtree(path)
+    except:
+        log("error", "delete dir", path)
+        return False
+    return True
+
 def copy_file(dst, src):
     "copy file"
     log("copy file", dst, src)

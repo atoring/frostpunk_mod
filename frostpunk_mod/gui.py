@@ -444,7 +444,7 @@ class Patch():
         if ret != "yes":
             return
         patch = patch_japanese.Patch()
-        if patch.patch_font():
+        if patch.patch_font(path):
             info_msg("フォントパッチを適応しました。")
         else:
             error_msg("フォントパッチを適応できませんでした。")
@@ -468,7 +468,7 @@ class Patch():
         if ret != "yes":
             return
         patch = patch_japanese.Patch()
-        if patch.patch_lang():
+        if patch.patch_lang(path):
             info_msg("翻訳パッチを適応しました。")
         else:
             error_msg("翻訳パッチを適応できませんでした。")

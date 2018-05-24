@@ -20,11 +20,9 @@ _local_file = "localizations"
 _font_path      = "data"
 _font_zip_file  = "notosanscjksc-medium.otf.binfont.zip"
 _font_file      = "notosanscjksc-medium.otf.binfont"
-
-_lang_path  = "data"
-_lang_file  = "lang.csv"
-
-_temp_path  = ".tmp"
+_lang_path      = "data"
+_lang_file      = "lang.csv"
+_temp_path      = ".tmp"
 
 def read_zip(path, file):
     "read file in zip file"
@@ -93,7 +91,7 @@ class Patch():
         path = path.replace("/", os.sep)
         self.__temp_path = path
 
-    def patch_font(self):
+    def patch_font(self, path):
         "patch font file"
         log("patch font file")
         if not make_dir(self.__temp_path):
@@ -102,22 +100,35 @@ class Patch():
         if not font:
             return False
         bk = backup.Backup()
-        bpath = bk.backup_path
-        path = os.path.join(bpath, _comn_file)
+        bk_comn_path = os.path.join(bk.backup_path, _comn_file)
+        tmp_comn_path = os.path.join(self.__temp_path, _comn_file)
+        game_comn_path = os.path.join(path, _comn_file)
         with archive.Archive() as arc:
-            if not arc.read_archive(path):
+            if not arc.read_archive(bk_comn_path):
                 return False
             if not arc.set_file(archive.font_index, font):
                 return False
-            path = os.path.join(self.__temp_path, _comn_file)
-            if not arc.write_archive(path):
+            if not arc.write_archive(tmp_comn_path):
                 return False
+        if not self.__copy_archive(game_comn_path, tmp_comn_path):
+            self.__copy_archive(game_comn_path, bk_comn_path)
+            return False
+        delete_dir(self.__temp_path)
         return True
 
-    def patch_lang(self):
+    def patch_lang(self, path):
         "patch lang file"
         log("patch lang file")
         return False
+
+    def __copy_archive(self, dst, src):
+        "copy archive file"
+        log("copy archive file", dst, src)
+        if not copy_file(dst + archive.index_ext, src + archive.index_ext):
+            return False
+        if not copy_file(dst + archive.data_ext, src + archive.data_ext):
+            return False
+        return True
 
     @property
     def lang_exists(self):

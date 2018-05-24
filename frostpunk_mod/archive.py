@@ -9,8 +9,8 @@ from common import *
 
 font_index  = 0x6b04d7c3
 
-_index_ext  = ".idx"
-_data_ext   = ".dat"
+index_ext  = ".idx"
+data_ext   = ".dat"
 
 _idx_id             = "id"
 _idx_data_size      = "data_size"
@@ -176,8 +176,8 @@ class Archive():
         log("read archive", path)
         self.close()
         self.__path         = path
-        self.__index_path   = path + _index_ext
-        self.__data_path    = path + _data_ext
+        self.__index_path   = path + index_ext
+        self.__data_path    = path + data_ext
         if not self.__parse_index():
             return False
         return True
@@ -216,8 +216,8 @@ class Archive():
         log("write archive", path)
         if path == self.__path:
             return False
-        index_path  = path + _index_ext
-        data_path   = path + _data_ext
+        index_path  = path + index_ext
+        data_path   = path + data_ext
         file_list = sorted(self.__file_list.items())
         log("open file", data_path)
         with open(data_path, "wb") as fd:
