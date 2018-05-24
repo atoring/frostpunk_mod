@@ -25,7 +25,7 @@ def log(*args):
         __log_func(args)
     else:
         now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        pprint(now)
+        print(now)
         pprint(args)
         if __log_verbose:
             func = sys._getframe(1).f_locals

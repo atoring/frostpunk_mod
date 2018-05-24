@@ -69,9 +69,12 @@ class Patch():
         bk = backup.Backup()
         bpath = bk.backup_path
         path = os.path.join(bpath, _comn_file)
-        arc = archive.Archive()
-        if not arc.read_archive(path):
-            return False
+        with archive.Archive() as arc:
+            if not arc.read_archive(path):
+                return False
+            font = arc.get_file(archive.font_index)
+            if not font:
+                return False
         return True
 
     def patch_lang(self):
