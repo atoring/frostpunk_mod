@@ -4,6 +4,7 @@
 import codecs
 import os
 import urllib.request
+import zipfile
 
 from common import *
 import archive
@@ -16,8 +17,27 @@ _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 _comn_file  = "common"
 _local_file = "localizations"
 
+_font_path      = "data"
+_font_zip_file  = "notosanscjksc-medium.otf.binfont.zip"
+_font_file      = "notosanscjksc-medium.otf.binfont"
+
 _lang_path  = "data"
 _lang_file  = "lang.csv"
+
+_temp_path  = ".tmp"
+
+def read_zip(path, file):
+    "read file in zip file"
+    log("read zip file", path, file)
+    try:
+        with zipfile.ZipFile(path) as zip:
+            with zip.open(file, "r") as f:
+                data = f.read()
+    except:
+        log("error", "read zip file", path, file)
+        return None
+    log("size", "%xh" % len(data))
+    return data
 
 class Sheet():
     "japanese translation sheet"
@@ -57,23 +77,40 @@ class Patch():
 
     def __init__(self):
         "constructor"
+        path = os.path.join(get_prog_path(), _font_path)
+        path = path.replace("/", os.sep)
+        self.__font_path = path
+        path = os.path.join(path, _font_zip_file)
+        self.__font_zip_file = path
+
         path = os.path.join(get_prog_path(), _lang_path)
         path = path.replace("/", os.sep)
         self.__lang_path = path
         path = os.path.join(path, _lang_file)
         self.__lang_file = path
 
+        path = os.path.join(get_prog_path(), _temp_path)
+        path = path.replace("/", os.sep)
+        self.__temp_path = path
+
     def patch_font(self):
         "patch font file"
         log("patch font file")
+        if not make_dir(self.__temp_path):
+            return False
+        font = read_zip(self.__font_zip_file, _font_file)
+        if not font:
+            return False
         bk = backup.Backup()
         bpath = bk.backup_path
         path = os.path.join(bpath, _comn_file)
         with archive.Archive() as arc:
             if not arc.read_archive(path):
                 return False
-            font = arc.get_file(archive.font_index)
-            if not font:
+            if not arc.set_file(archive.font_index, font):
+                return False
+            path = os.path.join(self.__temp_path, _comn_file)
+            if not arc.write_archive(path):
                 return False
         return True
 

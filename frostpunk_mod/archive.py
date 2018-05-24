@@ -146,6 +146,12 @@ class File():
         self.__index[_idx_offset]       = None
         self.__index[_idx_flag]         = 1
 
+    def reduction_data(self):
+        "reduction memory"
+        if self.__index[_idx_offset] is not None:
+            self.__data         = None
+            self.__comp_data    = None
+
 class Archive():
     "idx+dat archive"
 
@@ -207,6 +213,28 @@ class Archive():
 
     def write_archive(self, path):
         "write idx+dat archive"
+        log("write archive", path)
+        if path == self.__path:
+            return False
+        index_path  = path + _index_ext
+        data_path   = path + _data_ext
+        file_list = sorted(self.__file_list.items())
+        log("open file", data_path)
+        with open(data_path, "wb") as fd:
+            log("open file", index_path)
+            with open(index_path, "wb") as fi:
+                fi.write(struct.pack("<BBBII", 0x00, 0x02, 0x01, len(file_list), 0))    # head
+                index_struct = struct.Struct("<IIIIB")
+                offset = 0
+                for id, file in file_list:
+                    data = file.comp_data
+                    file.reduction_data()
+                    fd.write(data)
+                    index = file.index
+                    fi.write(index_struct.pack(index[_idx_id], index[_idx_data_size], index[_idx_decode_size], offset, index[_idx_flag]))
+                    offset += len(data)
+            log("close file", index_path)
+        log("close file", data_path)
         return True
 
     def close(self):
@@ -242,7 +270,7 @@ class Archive():
 
     def _get_data(self, offset, size):
         "get data from dat file"
-        log("get data", offset, size)
+#        log("get data", offset, size)
         if not self.__data:
             if not self.__data_path:
                 return None
