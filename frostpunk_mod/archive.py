@@ -5,6 +5,7 @@ import gzip
 import io
 import struct
 
+# mod
 from common import *
 
 notosans_font_id    = 0x6b04d7c3
@@ -34,8 +35,8 @@ _idx_decode_size    = "decode_size"
 _idx_offset         = "offset"
 _idx_flag           = "flag"
 
-_comp_level = 6
-#_comp_level = 9
+__comp_level = 6
+#__comp_level = 9
 
 def decompress(data, dec_size=None):
     "decompress data"
@@ -88,7 +89,7 @@ def decompress(data, dec_size=None):
         return None
     return dec_data
 
-def compress(data, compresslevel=_comp_level):
+def compress(data, compresslevel=__comp_level):
     "compress data"
     log("compress data", len(data), compresslevel)
     comp_data = gzip.compress(data, compresslevel)

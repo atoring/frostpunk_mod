@@ -1,14 +1,15 @@
 #!/usr/bin/python
 # coding: utf-8
 
-import codecs
 import os
 import urllib.request
 import zipfile
 
+# mod
 from common import *
 import archive
 import backup
+import language
 
 _sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/export?format=csv&gid=2068465123"
 _sheet_path = "data"
@@ -128,16 +129,25 @@ class Patch():
         with archive.Archive() as arc:
             if not arc.read_archive(bk_loc_path):
                 return False
-            lang = {}
+            lang = language.Language()
+            idx = 0
             for id in archive.lang_ids:
                 data = arc.get_file(id)
                 if not data:
                     return False
-                lang[id] = data
-            # ...
-            for id, data in lang:
+                lang.read_data(idx, data)
+                idx += 1
+            return False    # test
+            """
+            idx = 0
+            for id in archive.lang_ids:
+                data = lang.write_data(idx)
+                if not data:
+                    return False
                 if not arc.set_file(id, data):
                     return False
+                idx += 1
+            """
             if not make_dir(self.__tmp_path):
                 return False
             if not arc.write_archive(tmp_loc_path):

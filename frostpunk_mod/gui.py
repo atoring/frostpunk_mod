@@ -9,6 +9,7 @@ import os
 import subprocess
 import webbrowser
 
+# mod
 from common import *
 import backup
 import patch_japanese
