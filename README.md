@@ -14,6 +14,6 @@
 - [Frostpunk Steamサイト](https://store.steampowered.com/app/323190/Frostpunk/)
 - [Frostpunk Modツール(idx/dat)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7769)
 - [Frostpunk Modツール(lang)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7774)
-- [Noto Sansフォント(Google)](https://www.google.com/get/noto/)
+- [Google Notoフォント](https://www.google.com/get/noto/)
 - [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)
 (管理人ではありません)
