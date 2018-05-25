@@ -1,3 +1,5 @@
+/* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
+
 # Frostpunk非公式日本語化MODツール
 <img src="https://user-images.githubusercontent.com/33346100/39962682-4f2af924-5691-11e8-9077-ba0128998471.png" width=25%>
 
@@ -8,9 +10,7 @@
 Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpunk)など、Steam版以外では確認していません。
 
 なお、[公式日本語実装が予定](https://www.gamespark.jp/article/2018/04/09/79876.html)されています。
-よって、いつまで更新するか未定です。
-
-/* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
+したがいまして、いつまで更新をするか未定です。
 
 ## 使用方法
 [別ページ](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)に記載しています。
@@ -33,7 +33,7 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 - 2018/05/09(翻訳30%前後) (機械翻訳も含まれています)<br>
 <img src="https://user-images.githubusercontent.com/33346100/39788474-98e9f2ec-5365-11e8-88d3-ffe9ccafa5cd.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788602-22fad014-5366-11e8-9f32-11d9a4debbe1.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788612-2ef1cf44-5366-11e8-89d3-be7239305d4e.png" width=25%>
 
-## 参考資料
+## 参考文献
 - [11 bit studios](http://www.11bitstudios.com/)
 - [Frostpunk 公式サイト](http://www.frostpunkgame.com/)
 - [Frostpunk Steamサイト](https://store.steampowered.com/app/323190/Frostpunk/)

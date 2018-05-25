@@ -6,31 +6,53 @@ import struct
 # mod
 from common import *
 
-english_idx     = 0
-french_idx      = 1
-german_idx      = 2
-spanish_idx     = 3
-polish_idx      = 4
-russian_idx     = 5
-chinese_idx     = 6
-japanese_idx    = 7
+english_idx     = "english"
+french_idx      = "french"
+german_idx      = "german"
+spanish_idx     = "spanish"
+polish_idx      = "polish"
+russian_idx     = "russian"
+chinese_idx     = "chinese"
+japanese_idx    = "japanese"
+id_text_idx     = "id_text"
+lang_indexes = [
+    english_idx,
+    french_idx,
+    german_idx,
+    spanish_idx,
+    polish_idx,
+    russian_idx,
+    chinese_idx,
+    japanese_idx,
+    ]
 
 class Text():
     "text"
 
-    def __init__(self):
+    def __init__(self, index=None):
         "constructor"
-        self.__text = None
+        self.__text = {}
+        self.index = index
 
     @property
-    def text(self):
-        "get text"
-        return self.__text
+    def index(self):
+        "get index text"
+        return self.get_text(id_text_idx)
 
-    @text.setter
-    def text(self, text):
+    @index.setter
+    def index(self, text):
+        "set index text"
+        self.set_text(id_text_idx, text)
+
+    def get_text(self, lang_idx):
+        "get text"
+        if lang_idx in self.__text:
+            return self.__text[lang_idx]
+        return None
+
+    def set_text(self, lang_idx, text):
         "set text"
-        self.__text = text
+        self.__text[lang_idx] = text
 
 class Language():
     "language"
@@ -44,13 +66,13 @@ class Language():
         log("read lang file", lang_idx, path)
         data = read_bin(path)
         if data:
-            if not self.read_data(lang_idx, data):
-                return False
-        return True
+            if self.set_data(lang_idx, data):
+                return True
+        return False
 
-    def read_data(self, lang_idx, data):
-        "read lang data"
-        log("read lang data", lang_idx, len(data))
+    def set_data(self, lang_idx, data):
+        "set lang data"
+        log("set lang data", lang_idx, len(data))
         offset = 0
         size, texts = struct.unpack_from("<II", data, offset)
         offset += 8
@@ -72,18 +94,45 @@ class Language():
             offset += text_size
 #            log("str", str)
             if index in self.__text_list:
-                self.__text_list[index].text[lang_idx] = str
+                text = self.__text_list[index]
             else:
-                text = Text()
-                text.text = {lang_idx:str}
+                text = Text(index)
                 self.__text_list[index] = text
+            text.set_text(lang_idx, str)
             cnt += 1
         return True
 
     def write_file(self, lang_idx, path):
         "write lang file"
         log("write lang file", lang_idx, path)
+        data = self.get_data(lang_idx)
+        if data:
+            if write_bin(path, data):
+                return True
+        return False
 
-    def write_data(self, lang_idx):
-        "write lang data"
-        log("write lang data", lang_idx)
+    def get_data(self, lang_idx):
+        "get lang data"
+        log("get lang data", lang_idx)
+        text_list = self.__text_list.items()
+#        text_list = sorted(text_list)
+        head_struct = struct.Struct("<II")
+        size_struct = struct.Struct("<H")
+        data = bytearray()
+        data.extend(head_struct.pack(0, 0))
+        cnt = 0
+        for index, text in text_list:
+            str = text.get_text(lang_idx)
+            if str is not None:
+                data.extend(size_struct.pack(len(index)))
+                data.extend(index.encode("ascii"))
+                data.extend(size_struct.pack(len(str)))
+                data.extend(str.encode("utf-16-le"))
+                cnt += 1
+        data[:8] = head_struct.pack(len(data) - 4, cnt)
+        return data
+
+    def write_csv(self, path):
+        "write csv file"
+        log("write csv file", path)
+        return False

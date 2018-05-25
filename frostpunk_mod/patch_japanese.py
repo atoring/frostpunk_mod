@@ -130,24 +130,19 @@ class Patch():
             if not arc.read_archive(bk_loc_path):
                 return False
             lang = language.Language()
-            idx = 0
-            for id in archive.lang_ids:
-                data = arc.get_file(id)
+            for i in range(len(archive.lang_ids)):
+                data = arc.get_file(archive.lang_ids[i])
                 if not data:
                     return False
-                lang.read_data(idx, data)
-                idx += 1
-            return False    # test
-            """
-            idx = 0
-            for id in archive.lang_ids:
-                data = lang.write_data(idx)
+                if not lang.set_data(language.lang_indexes[i], data):
+                    return False
+            # ...
+            for i in range(len(archive.lang_ids)):
+                data = lang.get_data(language.lang_indexes[i])
                 if not data:
                     return False
-                if not arc.set_file(id, data):
+                if not arc.set_file(archive.lang_ids[i], data):
                     return False
-                idx += 1
-            """
             if not make_dir(self.__tmp_path):
                 return False
             if not arc.write_archive(tmp_loc_path):
@@ -158,7 +153,7 @@ class Patch():
             delete_dir(self.__tmp_path)
             return False
         delete_dir(self.__tmp_path)
-        return False
+        return True
 
     def __copy_archive(self, dst, src):
         "copy archive file"
