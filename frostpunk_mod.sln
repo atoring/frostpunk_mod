@@ -5,14 +5,29 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "frostpunk_mod", "frostpunk_mod\frostpunk_mod.pyproj", "{B3BEF902-D16C-4DD3-A166-35ECAC168014}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compile", "compile", "{5A60899B-58EB-4B11-88A1-7E59A7B09424}"
+	ProjectSection(SolutionItems) = preProject
+		compile\make_exe.bat = compile\make_exe.bat
+		compile\make_ver.bat = compile\make_ver.bat
+		compile\make_zip.bat = compile\make_zip.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|x64.ActiveCfg = Release|Any CPU
+		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
