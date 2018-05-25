@@ -10,9 +10,36 @@ import shutil
 import sys
 
 __prog_path     = None
-__log_func      = None
 __log_verbose   = False
+__log_path      = "log.txt"
+__log_file      = None
 __def_code      = "utf-8-sig"
+
+def __write_log_file(*args):
+    "write log to file"
+    global __log_file
+    if __log_file is None:
+        path = os.path.join(get_prog_path(), __log_path)
+        __log_file = codecs.open(path, "a", __def_code)
+        print("\n----------------------------------------------------------------------------------------------------", file=__log_file)
+    if __log_file is not None:
+        now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        print(now, file=__log_file)
+        pprint(args, stream=__log_file)
+        if __log_verbose:
+            func = sys._getframe(1).f_locals
+            pprint(func, stream=__log_file)
+
+def __close_log_file():
+    "close log file"
+    global __log_file
+    if __log_file is not None:
+        print("----------------------------------------------------------------------------------------------------\n", file=__log_file)
+        __log_file.close()
+        __log_file = None
+
+__log_func          = __write_log_file
+__close_log_func    = __close_log_file
 
 def set_log_func(func):
     "set function of output log"
@@ -30,6 +57,11 @@ def log(*args):
         if __log_verbose:
             func = sys._getframe(1).f_locals
             pprint(func)
+
+def close_log():
+    "close log"
+    if __close_log_func:
+        __close_log_func()
 
 def get_prog_path():
     "get path of running script"

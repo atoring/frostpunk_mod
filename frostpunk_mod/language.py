@@ -29,6 +29,10 @@ lang_indexes = [
     japanese_idx,
     ]
 
+def _null_func(text):
+    "null func"
+    return text
+
 class Text():
     "text"
 
@@ -56,6 +60,15 @@ class Text():
     def set_text(self, lang_idx, text):
         "set text"
         self.__text[lang_idx] = text
+
+    def set_all_text(self, text, skip_none=False):
+        "set text all lang"
+        if skip_none:
+            lang_list = self.__text.keys() & lang_indexes
+        else:
+            lang_list = lang_indexes
+        for lang_idx in lang_list:
+            self.__text[lang_idx] = text
 
 class Language():
     "language"
@@ -133,7 +146,7 @@ class Language():
         data[:8] = head_struct.pack(len(data) - 4, cnt)
         return data
 
-    def read_csv(self, path, lang_idx=japanese_idx, skip_row=4, csv_column=1):
+    def read_csv(self, path, fix_func=_null_func, lang_idx=japanese_idx, skip_row=4, csv_column=1):
         "read csv file"
         log("read csv file", path, lang_idx, skip_row, csv_column)
         index_list = list(self.__text_list.keys())
@@ -144,7 +157,9 @@ class Language():
 #                log("head", head)
                 cnt = skip_row
                 for data in r:
-                    self.__text_list[index_list[cnt]].set_text(lang_idx, data[csv_column])
+                    str = data[csv_column]
+                    str = fix_func(str)
+                    self.__text_list[index_list[cnt]].set_text(lang_idx, str)
                     cnt += 1
         except IOError:
             log("error", "read csv file", path)
@@ -168,11 +183,27 @@ class Language():
                         str = text.get_text(lang)
                         if str is None:
                             str = ""
-                        str = str.replace("\n", "</n>")
+                        str = str.replace("\n", "</n>") # new line
                         data.append(str)
                     w.writerow(data)
         except IOError:
             log("error", "write csv file", path)
             return False
         log("write len", len(self.__text_list))
+        return True
+
+    def set_text(self, lang_idx, index, text):
+        "set text"
+        log("set text", lang_idx, index, text)
+        if index not in self.__text_list:
+            return False
+        self.__text_list[index].set_text(lang_idx, text)
+        return True
+
+    def set_all_text(self, index, text):
+        "set text all lang"
+        log("set text all lang", index, text)
+        if index not in self.__text_list:
+            return False
+        self.__text_list[index].set_all_text(text)
         return True

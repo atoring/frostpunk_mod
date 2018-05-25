@@ -11,6 +11,7 @@ def main():
     log("prog path", get_prog_path())
     gui.main()
     log("end")
+    close_log()
 
 if __name__ == "__main__":
     main()

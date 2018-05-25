@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import os
+import re
 import urllib.request
 import zipfile
 
@@ -25,6 +26,9 @@ _lang_path      = "data"
 _lang_file      = "lang.csv"
 _tmp_path       = ".tmp"
 
+_lang_name_zh_index = "UI/Menu/Settings/LanguageNames/Chinese"
+_lang_name_ja_text  = "日本語"
+
 def read_zip(path, file):
     "read file in zip file"
     log("read zip file", path, file)
@@ -37,6 +41,19 @@ def read_zip(path, file):
         return None
     log("size", "%xh" % len(data))
     return data
+
+def _fix_text(text):
+    "fix text"
+    text = re.sub("[ 　]+", " ", text)
+    text = text.replace("</n>", "\n")   # new line
+    for k, v in {"０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9",",":"、","，":"、","、":"、，","!":"！","?":"？","：":":","／":"/","（":"(","）":")"}.items():
+        text = text.replace(k, v)   # replace
+    if False:
+        for s in ["人","年","月","日","時","分","秒","，","。","！","？","/"]:
+            text = re.sub("[ ]*%s[ ]*" % s, s, text)    # reduce length
+        for k, v in {r"\(":"(",r"\)":")"}.items():
+            text = re.sub("[ ]*%s[ ]*" % k, v, text)    # reduce length
+    return text
 
 class Sheet():
     "japanese translation sheet"
@@ -139,11 +156,17 @@ class Patch():
                     return False
             if not lang.write_csv(self.__lang_file):
                 return False
-            if not lang.read_csv(sheet.sheet_path):
+            if not lang.read_csv(sheet.sheet_path, _fix_text):
+                return False
+            # ...
+            if not lang.set_all_text(_lang_name_zh_index, _lang_name_ja_text):
                 return False
             # ...
             for i in range(len(archive.lang_ids)):
-                data = lang.get_data(language.lang_indexes[i])
+                idx = language.lang_indexes[i]
+                if idx == language.chinese_idx:
+                    idx = language.japanese_idx
+                data = lang.get_data(idx)
                 if not data:
                     return False
                 if not arc.set_file(archive.lang_ids[i], data):
