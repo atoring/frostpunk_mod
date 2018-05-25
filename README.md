@@ -26,6 +26,12 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## 謝辞
 11 bit studios様、翻訳作業所管理人様、翻訳有志諸氏、Frostpunkに関わるすべての人に感謝します。
 
+## オープニング
+ゲーム内ではオープニング動画に字幕はありません。しかし、Youtube公式動画にて日本語字幕付きで視聴できます。
+
+11 bit studios様の公式ローンチトレイラーですが、ゲーム内オープニング動画と同じものです。<br>
+<a href="https://www.youtube.com/watch?v=qqEpSOFDXGA&cc_load_policy=1&cc_lang_pref=ja"><img src="https://img.youtube.com/vi/qqEpSOFDXGA/hqdefault.jpg" alt="日本語字幕付き公式トレイラー" width=25%></a>
+
 ## 参考画像
 - 2018/05/??(翻訳100%)<br>
 随時追加
