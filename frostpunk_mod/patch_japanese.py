@@ -5,6 +5,7 @@ import os
 import re
 import urllib.request
 import zipfile
+from janome.tokenizer import Tokenizer  # see: http://mocobeta.github.io/janome/
 
 # mod
 from common import *
@@ -54,6 +55,43 @@ def _fix_text(text):
             text = re.sub("[ ]*%s[ ]*" % s, s, text)    # reduce length
         for k, v in {r"\(":"(",r"\)":")"}.items():
             text = re.sub("[ ]*%s[ ]*" % k, v, text)    # reduce length
+    return text
+
+def __get_max_sentence_len(str):
+    "get max sentence length"
+#    log("get max sentence length", str)
+    str = re.sub("<.*?>", "\n", str)
+    str = re.sub(r"\|.*?\|", "", str)
+    str = re.sub("{.*?}", "00000", str)
+    s = re.split("[\n，。！？]", str)
+    l = [len(_s) for _s in s]
+    max = sorted(set(l), reverse=True)[0]
+    return max
+
+__tok = Tokenizer()
+def _change_text(text, ref_text):
+    "change text"
+#    log("change text", text, ref_text)
+    global __tok
+    l = __get_max_sentence_len(text)
+    rl = __get_max_sentence_len(ref_text)
+    if l > 4 and l > rl:
+        try:
+            re.sub("[！？]", "", text).encode("ascii")
+        except:
+            tokens = __tok.tokenize(text)
+            str = ""
+            jf = False
+            for token in tokens:
+                pos = token.part_of_speech.split(',')
+                if jf:
+                    if pos[0]!="助詞" and pos[1]!="読点" and pos[1]!="句点":
+                        str += "，"
+                    jf = False
+                if pos[1]=="係助詞" or pos[1]=="格助詞":
+                    jf = True
+                str += token.surface
+            text = str
     return text
 
 class Sheet():
@@ -175,6 +213,8 @@ class Patch():
             if not lang.read_csv(sheet.sheet_path, _fix_text):
                 return False
             # ...
+            if not lang.change_text(language.japanese_idx, language.chinese_idx, _change_text):
+                return False
             if not lang.set_all_text(_lang_name_zh_index, _lang_name_ja_text):
                 return False
             # ...

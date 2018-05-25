@@ -29,7 +29,7 @@ lang_indexes = [
     japanese_idx,
     ]
 
-def _null_func(text):
+def _null_func(text, ref_text=None):
     "null func"
     return text
 
@@ -148,7 +148,7 @@ class Language():
 
     def read_csv(self, path, fix_func=_null_func, lang_idx=japanese_idx, skip_row=4, csv_column=1):
         "read csv file"
-        log("read csv file", path, lang_idx, skip_row, csv_column)
+        log("read csv file", path, fix_func, lang_idx, skip_row, csv_column)
         index_list = list(self.__text_list.keys())
         try:
             with codecs.open(path, "r", "utf-8-sig") as f:
@@ -206,4 +206,28 @@ class Language():
         if index not in self.__text_list:
             return False
         self.__text_list[index].set_all_text(text)
+        return True
+
+    def change_text(self, lang_idx, ref_lang_idx, change_func=_null_func):
+        "change text"
+        log("change text", lang_idx, ref_lang_idx, change_func)
+        cnt = 0
+        total = len(self.__text_list)
+        step = total/10
+        step_cnt = 0
+        for index, text in self.__text_list.items():
+            if False:
+                cnt += 1
+                step_cnt += 1
+                if step_cnt >= step:
+                    step_cnt -= step
+                    log("processing...", "%d%%" % (100*cnt//total))
+            str = text.get_text(lang_idx)
+            if str is None:
+                str = ""
+            ref = text.get_text(ref_lang_idx)
+            if ref is None:
+                ref = ""
+            str = change_func(str, ref)
+            text.set_text(lang_idx, str)
         return True

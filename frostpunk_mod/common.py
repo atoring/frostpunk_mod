@@ -38,8 +38,12 @@ def __close_log_file():
         __log_file.close()
         __log_file = None
 
-__log_func          = __write_log_file
-__close_log_func    = __close_log_file
+if False:
+    __log_func          = None
+    __close_log_func    = None
+else:
+    __log_func          = __write_log_file
+    __close_log_func    = __close_log_file
 
 def set_log_func(func):
     "set function of output log"
