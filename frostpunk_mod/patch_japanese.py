@@ -126,6 +126,7 @@ class Patch():
         bk_loc_path = os.path.join(bk.backup_path, _loc_file)
         tmp_loc_path = os.path.join(self.__tmp_path, _loc_file)
         game_loc_path = os.path.join(path, _loc_file)
+        sheet = Sheet()
         with archive.Archive() as arc:
             if not arc.read_archive(bk_loc_path):
                 return False
@@ -137,6 +138,8 @@ class Patch():
                 if not lang.set_data(language.lang_indexes[i], data):
                     return False
             if not lang.write_csv(self.__lang_file):
+                return False
+            if not lang.read_csv(sheet.sheet_path):
                 return False
             # ...
             for i in range(len(archive.lang_ids)):

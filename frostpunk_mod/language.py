@@ -133,16 +133,38 @@ class Language():
         data[:8] = head_struct.pack(len(data) - 4, cnt)
         return data
 
-    def write_csv(self, path):
+    def read_csv(self, path, lang_idx=japanese_idx, skip_row=4, csv_column=1):
+        "read csv file"
+        log("read csv file", path, lang_idx, skip_row, csv_column)
+        index_list = list(self.__text_list.keys())
+        try:
+            with codecs.open(path, "r", "utf-8-sig") as f:
+                r = csv.reader(f, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
+                head = next(r)
+#                log("head", head)
+                cnt = skip_row
+                for data in r:
+                    self.__text_list[index_list[cnt]].set_text(lang_idx, data[csv_column])
+                    cnt += 1
+        except IOError:
+            log("error", "read csv file", path)
+            return False
+        return True
+
+    def write_csv(self, path, skip_ja=True):
         "write csv file"
-        log("write csv file", path)
+        log("write csv file", path, skip_ja)
+        if skip_ja:
+            lang_list = lang_indexes[:-1]
+        else:
+            lang_list = lang_indexes
         try:
             with codecs.open(path, "w", "utf-8-sig") as f:
                 w = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
-                w.writerow(["index"] + lang_indexes[:-1])
+                w.writerow(["index"] + lang_list)
                 for index, text in self.__text_list.items():
                     data = [index]
-                    for lang in lang_indexes[:-1]:
+                    for lang in lang_list:
                         str = text.get_text(lang)
                         if str is None:
                             str = ""
