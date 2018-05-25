@@ -531,7 +531,8 @@ class Main(tk.Frame):
     def __set_window(self, master=None):
         "setting window"
         master.withdraw()
-        master.title("Frostpunk用総合MODツール")
+#        master.title("Frostpunk用総合MODツール")
+        master.title("Frostpunk非公式日本語化MODツール")
         master.geometry(_win_size)
         master.resizable(0, 0)
         self.__center(master)
