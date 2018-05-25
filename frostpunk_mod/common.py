@@ -62,7 +62,7 @@ def read_txt(path, code=__def_code):
     except IOError:
         log("error", "read text file", path)
         return None
-    log("read text lines", "%d" % len(data))
+    log("read text lines", len(data))
     return data
 
 def write_bin(path, data):
@@ -89,7 +89,7 @@ def write_txt(path, data, code=__def_code):
     if isinstance(data, str) or isinstance(data, bytes):
         log("write text size", "%xh" % len(data))
     else:
-        log("write text lines", "%d" % len(data))
+        log("write text lines", len(data))
     return True
 
 def make_dir(path):

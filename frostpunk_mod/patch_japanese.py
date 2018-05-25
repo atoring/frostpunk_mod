@@ -136,6 +136,8 @@ class Patch():
                     return False
                 if not lang.set_data(language.lang_indexes[i], data):
                     return False
+            if not lang.write_csv(self.__lang_file):
+                return False
             # ...
             for i in range(len(archive.lang_ids)):
                 data = lang.get_data(language.lang_indexes[i])

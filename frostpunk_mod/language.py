@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # coding: utf-8
 
+import codecs
+from collections import OrderedDict
+import csv
 import struct
 
 # mod
@@ -59,7 +62,7 @@ class Language():
 
     def __init__(self):
         "constructor"
-        self.__text_list = {}
+        self.__text_list = OrderedDict()
 
     def read_file(self, lang_idx, path):
         "read lang file"
@@ -114,14 +117,12 @@ class Language():
     def get_data(self, lang_idx):
         "get lang data"
         log("get lang data", lang_idx)
-        text_list = self.__text_list.items()
-#        text_list = sorted(text_list)
         head_struct = struct.Struct("<II")
         size_struct = struct.Struct("<H")
         data = bytearray()
         data.extend(head_struct.pack(0, 0))
         cnt = 0
-        for index, text in text_list:
+        for index, text in self.__text_list.items():
             str = text.get_text(lang_idx)
             if str is not None:
                 data.extend(size_struct.pack(len(index)))
@@ -135,4 +136,21 @@ class Language():
     def write_csv(self, path):
         "write csv file"
         log("write csv file", path)
-        return False
+        try:
+            with codecs.open(path, "w", "utf-8-sig") as f:
+                w = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
+                w.writerow(["index"] + lang_indexes[:-1])
+                for index, text in self.__text_list.items():
+                    data = [index]
+                    for lang in lang_indexes[:-1]:
+                        str = text.get_text(lang)
+                        if str is None:
+                            str = ""
+                        str = str.replace("\n", "</n>")
+                        data.append(str)
+                    w.writerow(data)
+        except IOError:
+            log("error", "write csv file", path)
+            return False
+        log("write len", len(self.__text_list))
+        return True
