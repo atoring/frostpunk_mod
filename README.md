@@ -10,6 +10,8 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 なお、[公式日本語実装が予定](https://www.gamespark.jp/article/2018/04/09/79876.html)されています。
 よって、いつまで更新するか未定です。
 
+/* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
+
 ## 使用方法
 [別ページ](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)に記載しています。
 
@@ -17,13 +19,12 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 バグなどありましたら、[Issues](https://github.com/atoring/frostpunk_mod/issues)へお願いします。
 
 翻訳に関するものは、[翻訳作業所](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)へお願いします。
-(管理人ではありません。)
+(弊方は管理人ではありません。)
 
 ゲームそのものに関するものは、公式へお願いします。[(サポートガイド)](https://steamcommunity.com/app/323190/discussions/0/3211505894148951485/)
 
 ## 謝辞
 11 bit studios様、翻訳作業所管理人様、翻訳有志諸氏、Frostpunkに関わるすべての人に感謝します。
-希望と絶望をありがとうございます。
 
 ## 参考画像
 - 2018/05/??(翻訳100%)<br>
@@ -39,9 +40,8 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 - [Frostpunk Modツール(idx/dat)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7769)
 - [Frostpunk Modツール(lang)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7774)
 - [Google Notoフォント](https://www.google.com/get/noto/)
-- [Frostpunk スレッド(2ch/5ch)](https://egg.5ch.net/test/read.cgi/game/1524567217/)
 - [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)
-(管理人ではありません)
+(弊方は管理人ではありません)
 
 ## 履歴
 雑然としていますが、記録として残しておきます。
