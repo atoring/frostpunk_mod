@@ -21,6 +21,7 @@ _loc_file   = "localizations"
 
 _font_path      = "data"
 _font_zip_file  = "notosanscjksc-medium.otf.binfont.zip"
+_font_gz_file   = "notosanscjksc-medium.otf.binfont.gz"
 _font_file      = "notosanscjksc-medium.otf.binfont"
 _lang_path      = "data"
 _lang_file      = "lang.csv"
@@ -96,8 +97,10 @@ class Patch():
         path = os.path.join(get_prog_path(), _font_path)
         path = path.replace("/", os.sep)
         self.__font_path = path
-        path = os.path.join(path, _font_zip_file)
+        path = os.path.join(self.__font_path, _font_zip_file)
         self.__font_zip_file = path
+        path = os.path.join(self.__font_path, _font_gz_file)
+        self.__font_gz_file = path
 
         path = os.path.join(get_prog_path(), _lang_path)
         path = path.replace("/", os.sep)
@@ -112,9 +115,16 @@ class Patch():
     def patch_font(self, path):
         "patch font file"
         log("patch font file", path)
-        font = read_zip(self.__font_zip_file, _font_file)
-        if not font:
-            return False
+        if True:
+            # read binfont from zip
+            font = read_zip(self.__font_zip_file, _font_file)
+            if not font:
+                return False
+        else:
+            # read gz binfont
+            font = read_bin(self.__font_gz_file)
+            if not font:
+                return False
         bk = backup.Backup()
         bk_cmn_path = os.path.join(bk.backup_path, _cmn_file)
         tmp_cmn_path = os.path.join(self.__tmp_path, _cmn_file)
@@ -122,8 +132,14 @@ class Patch():
         with archive.Archive() as arc:
             if not arc.read_archive(bk_cmn_path):
                 return False
-            if not arc.set_file(archive.notosans_font_id, font):
-                return False
+            if True:
+                # binfont
+                if not arc.set_file(archive.notosans_font_id, font):
+                    return False
+            else:
+                # gz binfont
+                if not arc.set_comp_file(archive.notosans_font_id, font):
+                    return False
             if not make_dir(self.__tmp_path):
                 return False
             if not arc.write_archive(tmp_cmn_path):

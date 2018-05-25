@@ -125,8 +125,12 @@ class File():
                 if self.__index[_idx_flag] == 0:
                     self.__data = data
                 else:
-                    size        = self.__index[_idx_decode_size]
-                    self.__data = decompress(data, size)
+                    size = self.__index[_idx_decode_size]
+                    if size:
+                        self.__data                     = decompress(data, size)
+                    else:
+                        self.__data                     = decompress(data)
+                        self.__index[_idx_decode_size]  = len(self.__data)
         return self.__data
 
     @data.setter
@@ -135,8 +139,8 @@ class File():
         self.__data                     = data
         self.__index[_idx_decode_size]  = len(data)
 
-        self.__comp_data                = compress(data)
-        self.__index[_idx_data_size]    = len(self.__comp_data)
+        self.__comp_data                = None
+        self.__index[_idx_data_size]    = None
 
         self.__index[_idx_offset]       = None
         self.__index[_idx_flag]         = 1
@@ -148,7 +152,10 @@ class File():
             offset  = self.__index[_idx_offset]
             size    = self.__index[_idx_data_size]
             if offset is not None and size is not None:
-                self.__comp_data = self.__master._get_data(offset, size)
+                self.__comp_data                = self.__master._get_data(offset, size)
+            else:
+                self.__comp_data                = compress(self.__data)
+                self.__index[_idx_data_size]    = len(self.__comp_data)
         return self.__comp_data
 
     @comp_data.setter
@@ -157,8 +164,8 @@ class File():
         self.__comp_data                = data
         self.__index[_idx_data_size]    = len(data)
 
-        self.__data                     = decompress(data)
-        self.__index[_idx_decode_size]  = len(self.__data)
+        self.__data                     = None
+        self.__index[_idx_decode_size]  = None
 
         self.__index[_idx_offset]       = None
         self.__index[_idx_flag]         = 1
@@ -276,12 +283,31 @@ class Archive():
             return data
         return None
 
+    def get_comp_file(self, id):
+        "get compression file from archive"
+        log("get com file", id)
+        file = self.__file_list[id]
+        if file:
+            data = file.comp_data
+            log("size", len(data))
+            return data
+        return None
+
     def set_file(self, id, data):
         "set file to archive"
         log("set file", id, len(data))
         file = self.__file_list[id]
         if file:
             file.data = data
+            return True
+        return False
+
+    def set_comp_file(self, id, data):
+        "set compression file to archive"
+        log("set comp file", id, len(data))
+        file = self.__file_list[id]
+        if file:
+            file.comp_data = data
             return True
         return False
 
