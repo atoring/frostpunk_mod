@@ -74,24 +74,27 @@ def _change_text(text, ref_text):
 #    log("change text", text, ref_text)
     global __tok
     l = __get_max_sentence_len(text)
+    if l <= 4:
+        return text
     rl = __get_max_sentence_len(ref_text)
-    if l > 4 and l > rl:
-        try:
-            re.sub("[！？]", "", text).encode("ascii")
-        except:
-            tokens = __tok.tokenize(text)
-            str = ""
-            jf = False
-            for token in tokens:
-                pos = token.part_of_speech.split(',')
-                if jf:
-                    if pos[0]!="助詞" and pos[1]!="読点" and pos[1]!="句点":
-                        str += "，"
-                    jf = False
-                if pos[1]=="係助詞" or pos[1]=="格助詞":
-                    jf = True
-                str += token.surface
-            text = str
+    if l <= rl:
+        return text
+    try:
+        re.sub("[！？]", "", text).encode("ascii")
+    except:
+        tokens = __tok.tokenize(text)
+        str = ""
+        jf = False
+        for token in tokens:
+            pos = token.part_of_speech.split(',')
+            if jf:
+                if pos[0]!="助詞" and pos[1]!="読点" and pos[1]!="句点":
+                    str += "，"
+                jf = False
+            if pos[1]=="係助詞" or pos[1]=="格助詞":
+                jf = True
+            str += token.surface
+        text = str
     return text
 
 class Sheet():

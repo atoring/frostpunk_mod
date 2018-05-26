@@ -5,6 +5,7 @@ import codecs
 from collections import OrderedDict
 import csv
 import struct
+import time
 
 # mod
 from common import *
@@ -215,6 +216,7 @@ class Language():
         total = len(self.__text_list)
         step = total/10
         step_cnt = 0
+        start = time.time()
         for index, text in self.__text_list.items():
             if False:
                 cnt += 1
@@ -230,4 +232,6 @@ class Language():
                 ref = ""
             str = change_func(str, ref)
             text.set_text(lang_idx, str)
+        end = time.time()
+        log("total: %d sec" % (end - start)
         return True
