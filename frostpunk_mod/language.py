@@ -233,5 +233,5 @@ class Language():
             str = change_func(str, ref)
             text.set_text(lang_idx, str)
         end = time.time()
-        log("total: %d sec" % (end - start)
+        log("total: %d sec" % (end - start))
         return True
