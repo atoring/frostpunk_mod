@@ -45,7 +45,9 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 - [Frostpunk Steamサイト](https://store.steampowered.com/app/323190/Frostpunk/)
 - [Frostpunk Modツール(idx/dat)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7769)
 - [Frostpunk Modツール(lang)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7774)
+- [libGDX](https://github.com/libgdx/libgdx)
 - [Google Notoフォント](https://www.google.com/get/noto/)
+- [源真ゴシック](http://jikasei.me/font/genshin/)
 - [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)
 (弊方は管理人ではありません)
 
