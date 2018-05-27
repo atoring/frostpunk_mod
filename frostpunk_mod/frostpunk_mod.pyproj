@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="archive.py" />
     <Compile Include="backup.py" />
+    <Compile Include="binfont\encode.py" />
     <Compile Include="common.py" />
     <Compile Include="font.py" />
     <Compile Include="gui.py" />
@@ -30,6 +31,12 @@
     <Compile Include="main.py" />
     <Compile Include="patch_japanese.py" />
     <Compile Include="version.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="binfont" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="binfont\hiero.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
