@@ -1,1 +1,5 @@
 /.vs
+/frostpunk_mod/*.ini
+/frostpunk_mod/backup
+/frostpunk_mod/data/*.csv
+/compile/frostpunk_mod_*.zip
