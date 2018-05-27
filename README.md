@@ -15,6 +15,10 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## 使用方法
 [別ページ](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)に記載しています。
 
+## 使用フォント
+[源真ゴシック](http://jikasei.me/font/genshin/)を使用させていただいています。
+以前のバージョンでは、[Noto Sans](https://www.google.com/get/noto/)(源ノ角ゴシック)を使用させていただいていました。
+
 ## バグ報告
 バグなどありましたら、[Issues](https://github.com/atoring/frostpunk_mod/issues)へお願いします。
 
