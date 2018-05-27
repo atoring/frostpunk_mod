@@ -138,6 +138,8 @@ class Patch():
         path = os.path.join(get_prog_path(), _font_path)
         path = path.replace("/", os.sep)
         self.__font_path = path
+        path = os.path.join(self.__font_path, _font_file)
+        self.__font_file = path
         path = os.path.join(self.__font_path, _font_zip_file)
         self.__font_zip_file = path
         path = os.path.join(self.__font_path, _font_gz_file)
@@ -156,7 +158,12 @@ class Patch():
     def patch_font(self, path):
         "patch font file"
         log("patch font file", path)
-        if True:
+        if False:
+            # read binfont
+            font = read_bin(self.__font_file)
+            if not font:
+                return False
+        elif True:
             # read binfont from zip
             font = read_zip(self.__font_zip_file, _font_file)
             if not font:
