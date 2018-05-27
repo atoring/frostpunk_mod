@@ -15,9 +15,8 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## 使用方法
 [別ページ](https://github.com/atoring/frostpunk_mod/wiki/%E7%B7%8F%E5%90%88MOD%E3%83%84%E3%83%BC%E3%83%AB)に記載しています。
 
-## 使用フォント
-[源真ゴシック](http://jikasei.me/font/genshin/)を使用させていただいています。
-以前のバージョンでは、[Noto Sans](https://www.google.com/get/noto/)(源ノ角ゴシック)を使用させていただいていました。
+## ダウンロード
+[リリースページ](https://github.com/atoring/frostpunk_mod/releases)からダウンロードができます。
 
 ## バグ報告
 バグなどありましたら、[Issues](https://github.com/atoring/frostpunk_mod/issues)へお願いします。
@@ -26,6 +25,18 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 (弊方は管理人ではありません。)
 
 ゲームそのものに関するものは、公式へお願いします。[(サポートガイド)](https://steamcommunity.com/app/323190/discussions/0/3211505894148951485/)
+
+## 使用フォント
+[源真ゴシック](http://jikasei.me/font/genshin/)を使用させていただいています。
+以前のバージョンでは、[Noto Sans](https://www.google.com/get/noto/)(源ノ角ゴシック)を使用させていただいていました。
+
+## 翻訳状況
+[翻訳作業所](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)にて、
+有志による翻訳が行われています。
+
+英語の言語ファイルにある文章は、既に100%翻訳がされています。現在は、訳語、用語の統一の為の議論や投票、推敲などが行われています。
+
+現在も日々更新がされており、MODツールにて随時ダウンロード、適応することにより、任意に確認ができます。
 
 ## 謝辞
 11 bit studios様、翻訳作業所管理人様、翻訳有志諸氏、Frostpunkに関わるすべての人に感謝します。
