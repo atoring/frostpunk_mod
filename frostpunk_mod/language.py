@@ -212,6 +212,8 @@ class Language():
     def change_text(self, lang_idx, ref_lang_idx, change_func=_null_func):
         "change text"
         log("change text", lang_idx, ref_lang_idx, change_func)
+        debug = False
+        debug_log = []
         cnt = 0
         total = len(self.__text_list)
         step = total/10
@@ -230,8 +232,15 @@ class Language():
             ref = text.get_text(ref_lang_idx)
             if ref is None:
                 ref = ""
-            str = change_func(str, ref)
-            text.set_text(lang_idx, str)
+            str_ = change_func(str, ref)
+            text.set_text(lang_idx, str_)
+            if debug:
+                if str != str_:
+                    debug_log.append(index)
+                    debug_log.append(str)
+                    debug_log.append(str_)
         end = time.time()
         log("total: %d sec" % (end - start))
+        if debug:
+            write_txt("debug.txt", "\n".join(debug_log))
         return True
