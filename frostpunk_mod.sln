@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{23
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "binfont", "binfont\binfont.pyproj", "{DFB2ED58-86F0-4898-846F-020B80EA30AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,12 @@ Global
 		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|x64.ActiveCfg = Release|Any CPU
 		{B3BEF902-D16C-4DD3-A166-35ECAC168014}.Release|x86.ActiveCfg = Release|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{DFB2ED58-86F0-4898-846F-020B80EA30AD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

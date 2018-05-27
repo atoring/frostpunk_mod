@@ -93,7 +93,7 @@ def encode():
     width = 4096
     height = 4096
     bpp = 32
-    tex_file,chrs = read_fnt_txt("./binfont/data/font.fnt")
+    tex_file,chrs = read_fnt_txt("./data/font.fnt")
 
     bin = bytearray()
     magic,ver,texs = (0x35150f8a,9,len(tex_file))
@@ -103,7 +103,7 @@ def encode():
     tex = bytearray()
     for i in range(_texs):
         print("tex group: %d" % i)
-        w,h,d = read_pngs("./binfont/data/", tex_file[i*4:(i+1)*4], width, height)
+        w,h,d = read_pngs("./data/", tex_file[i*4:(i+1)*4], width, height)
         if w!=width or h!=height:
             print("error: size")
             quit()

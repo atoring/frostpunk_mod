@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>b3bef902-d16c-4dd3-a166-35ecac168014</ProjectGuid>
+    <ProjectGuid>dfb2ed58-86f0-4898-846f-020b80ea30ad</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>encode.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,15 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="archive.py" />
-    <Compile Include="backup.py" />
-    <Compile Include="common.py" />
-    <Compile Include="font.py" />
-    <Compile Include="gui.py" />
-    <Compile Include="language.py" />
-    <Compile Include="main.py" />
-    <Compile Include="patch_japanese.py" />
-    <Compile Include="version.py" />
+    <Compile Include="encode.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hiero.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

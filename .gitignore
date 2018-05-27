@@ -1,6 +1,8 @@
 /.vs
 /frostpunk_mod/*.ini
+/frostpunk_mod/*.txt
 /frostpunk_mod/backup
 /frostpunk_mod/data/*.csv
+/binfont/data/*.binfont
 /compile/frostpunk_mod.exe
 /compile/frostpunk_mod_*.zip
