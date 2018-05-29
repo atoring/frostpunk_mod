@@ -7,10 +7,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "frostpunk_mod", "frostpunk_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compile", "compile", "{5A60899B-58EB-4B11-88A1-7E59A7B09424}"
 	ProjectSection(SolutionItems) = preProject
-		compile\checkout_ver.bat = compile\checkout_ver.bat
 		compile\make_exe.bat = compile\make_exe.bat
 		compile\make_ver.bat = compile\make_ver.bat
 		compile\make_zip.bat = compile\make_zip.bat
+		compile\reset_ver.bat = compile\reset_ver.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{23FE3286-95ED-4CEA-8498-33A8ED0ADAE3}"
