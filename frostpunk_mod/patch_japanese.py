@@ -119,7 +119,11 @@ class Sheet():
             return False
         if not make_dir(self.__sheet_path):
             return False
-        return write_txt(self.__sheet_file, data)
+        if not write_txt(self.__sheet_file, data):
+            return False
+        # write Zone.Identifier to NTFS stream of csv file
+        write_txt(self.__sheet_file+":Zone.Identifier", "[ZoneTransfer]\nZoneId=3", "ascii")
+        return True
 
     @property
     def exists(self):
