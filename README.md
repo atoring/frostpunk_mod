@@ -1,6 +1,6 @@
 /* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
 
-## ※2018/05/18ゲームの方に[1.1.0アップデート](https://steamcommunity.com/games/323190/announcements/detail/3077529495343351883)が配信されました。現在内容確認中です。
+## ※2018/06/19ゲームの方に[1.1.0アップデート](https://steamcommunity.com/games/323190/announcements/detail/3077529495343351883)が配信されました。現在内容確認中です。
 
 # Frostpunk非公式日本語化MODツール
 <img src="https://user-images.githubusercontent.com/33346100/40556844-23c1eed0-6089-11e8-8b6c-28181e95e59e.png" width=25%>
