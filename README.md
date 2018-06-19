@@ -1,5 +1,7 @@
 /* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
 
+## ※現在1.1.0で正常動作しません。対応まで暫くお待ちください。
+
 # Frostpunk非公式日本語化MODツール
 <img src="https://user-images.githubusercontent.com/33346100/40556844-23c1eed0-6089-11e8-8b6c-28181e95e59e.png" width=25%>
 
