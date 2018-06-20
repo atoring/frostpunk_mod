@@ -96,7 +96,7 @@ def encode():
     tex_file,chrs = read_fnt_txt("./data/font.fnt")
 
     bin = bytearray()
-    magic,ver,texs = (0x35150f8a,9,len(tex_file))
+    magic,ver,texs = (0x23865209,9,len(tex_file))
     _texs = (texs+3)//4
     bin.extend(struct.pack("<III", magic,ver,_texs))
 
