@@ -147,24 +147,40 @@ class Language():
         data[:8] = head_struct.pack(len(data) - 4, cnt)
         return data
 
-    def read_csv(self, path, fix_func=_null_func, lang_idx=japanese_idx, skip_row=4, csv_column=1):
+    def read_csv(self, path, fix_func=_null_func, lang_idx=japanese_idx, idx_column=6, text_column=1):
         "read csv file"
-        log("read csv file", path, fix_func, lang_idx, skip_row, csv_column)
-        index_list = list(self.__text_list.keys())
+        log("read csv file", path, fix_func, lang_idx, idx_column, text_column)
+
+        # read csv
+        cl = {}
         try:
             with codecs.open(path, "r", "utf-8-sig") as f:
                 r = csv.reader(f, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
                 head = next(r)
 #                log("head", head)
-                cnt = skip_row
                 for data in r:
-                    str = data[csv_column]
-                    str = fix_func(str)
-                    self.__text_list[index_list[cnt]].set_text(lang_idx, str)
-                    cnt += 1
+                    idx = data[idx_column]
+                    text = data[text_column]
+                    cl[idx] = text
         except IOError:
             log("error", "read csv file", path)
             return False
+
+        # check
+        flag = False
+        for idx in self.__text_list.keys():
+            if idx not in cl:
+                log("not found", idx)
+#                print("not found: %s" % idx)
+                flag = True
+        if flag:
+            return False
+
+        # replacement
+        for idx in self.__text_list.keys():
+            str = cl[idx]
+            str = fix_func(str)
+            self.__text_list[idx].set_text(lang_idx, str)
         return True
 
     def write_csv(self, path, skip_ja=True):
