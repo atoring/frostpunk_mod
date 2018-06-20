@@ -174,8 +174,8 @@ class Language():
                     log("not found", idx)
 #                    print("not found: %s" % idx)
                     flag = True
-            if flag:
-                return False
+#            if flag:
+#                return False
 
         # replacement
         for idx in self.__text_list.keys():
