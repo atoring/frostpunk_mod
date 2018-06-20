@@ -167,20 +167,28 @@ class Language():
             return False
 
         # check
-        flag = False
-        for idx in self.__text_list.keys():
-            if idx not in cl:
-                log("not found", idx)
-#                print("not found: %s" % idx)
-                flag = True
-        if flag:
-            return False
+        if True:
+            flag = False
+            for idx in self.__text_list.keys():
+                if idx not in cl:
+                    log("not found", idx)
+#                    print("not found: %s" % idx)
+                    flag = True
+            if flag:
+                return False
 
         # replacement
         for idx in self.__text_list.keys():
-            str = cl[idx]
-            str = fix_func(str)
-            self.__text_list[idx].set_text(lang_idx, str)
+            if idx in cl:
+                text = self.__text_list[idx]
+                str = cl[idx]
+                if str != "":
+                    str = fix_func(str)
+                    text.set_text(lang_idx, str)
+                else:
+                    en = text.get_text(english_idx)
+                    if en is not None:
+                        text.set_text(lang_idx, en)
         return True
 
     def write_csv(self, path, skip_ja=True):
