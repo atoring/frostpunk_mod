@@ -13,7 +13,8 @@ import archive
 import backup
 import language
 
-_sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/export?format=csv&gid=2068465123"
+#_sheet_url  = "https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8/export?format=csv&gid=2068465123"
+_sheet_url  = "https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoYw4xIUtkk0bthxj_S-I/export?format=csv&gid=1214946218"
 _sheet_path = "data"
 _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 
