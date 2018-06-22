@@ -153,6 +153,7 @@ class Language():
 
         # read csv
         cl = {}
+#        cl_en = {}
         try:
             with codecs.open(path, "r", "utf-8-sig") as f:
                 r = csv.reader(f, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
@@ -162,6 +163,7 @@ class Language():
                     idx = data[idx_column]
                     text = data[text_column]
                     cl[idx] = text
+#                    cl_en[idx] = data[0]
         except IOError:
             log("error", "read csv file", path)
             return False
@@ -176,6 +178,19 @@ class Language():
                     flag = True
 #            if flag:
 #                return False
+
+        # check
+        if False:
+            for idx, text in self.__text_list.items():
+                en = text.get_text(english_idx)
+                if en is not None:
+                    en = en.replace("\n", "</n>")
+                    en_ = cl_en[idx]
+                    if en != en_:
+                        print(idx)
+                        print(en)
+                        print(en_)
+            return False
 
         # replacement
         for idx in self.__text_list.keys():
