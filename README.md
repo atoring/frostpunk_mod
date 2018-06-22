@@ -21,7 +21,7 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## バグ報告
 バグなどありましたら、[Issues](https://github.com/atoring/frostpunk_mod/issues)へお願いします。
 
-翻訳に関するものは、[翻訳作業所](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)へお願いします。
+翻訳に関するものは、[翻訳作業所](https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoYw4xIUtkk0bthxj_S-I)へお願いします。
 (弊方は管理人ではありません。)
 
 ゲームそのものに関するものは、公式へお願いします。[(サポートガイド)](https://steamcommunity.com/app/323190/discussions/0/3211505894148951485/)
@@ -31,7 +31,7 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 以前のバージョンでは、[Noto Sans](https://www.google.com/get/noto/)(源ノ角ゴシック)を使用させていただいていました。
 
 ## 翻訳状況
-[翻訳作業所](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)にて、
+[翻訳作業所](https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoYw4xIUtkk0bthxj_S-I)にて、
 有志による翻訳が行われています。
 
 英語の言語ファイルにある文章は、既に100%翻訳がされています。現在は、訳語、用語の統一の為の議論や投票、推敲などが行われています。
@@ -50,10 +50,8 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## 参考画像
 - 2018/06/22(バージョン1.1.0)<br>
 <img src="https://user-images.githubusercontent.com/33346100/41737790-3838b0ea-75cb-11e8-8cf6-af3d85e4c1e7.png" width=25%>
-
 - 2018/05/26(翻訳100%)<br>
 <img src="https://user-images.githubusercontent.com/33346100/40558136-5f221834-608d-11e8-8405-eeae9a126de8.jpg" width=25%> <img src="https://user-images.githubusercontent.com/33346100/40558170-6e29bc24-608d-11e8-93c0-4e421757a9cc.jpg" width=25%> <img src="https://user-images.githubusercontent.com/33346100/40558184-7977cbde-608d-11e8-95d3-5469639e9c97.jpg" width=25%>
-
 - 2018/05/09(翻訳30%前後) (機械翻訳も含まれています)<br>
 <img src="https://user-images.githubusercontent.com/33346100/39788474-98e9f2ec-5365-11e8-88d3-ffe9ccafa5cd.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788602-22fad014-5366-11e8-9f32-11d9a4debbe1.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788612-2ef1cf44-5366-11e8-89d3-be7239305d4e.png" width=25%>
 
@@ -66,7 +64,7 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 - [libGDX](https://github.com/libgdx/libgdx)
 - [Google Notoフォント](https://www.google.com/get/noto/)
 - [源真ゴシック](http://jikasei.me/font/genshin/)
-- [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1-eu8GT6_zI4IOTHWFymplV81GJj1Q469FSWv6jGUHH8)
+- [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoYw4xIUtkk0bthxj_S-I)
 (弊方は管理人ではありません)
 
 ## 履歴
