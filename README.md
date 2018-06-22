@@ -7,7 +7,7 @@
 [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)の非公式日本語化MODツールです。
 有志による日本語翻訳パッチを適応することができます。
 
-Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpunk)など、Steam版以外では確認していません。
+[Steam版](https://store.steampowered.com/app/323190/Frostpunk/)を対象としています。[GOG版](https://www.gog.com/game/frostpunk)や[Microsoftストア版](https://www.microsoft.com/ja-jp/p/frostpunk/9ns0kh25d76x)など、Steam版以外では確認していません。
 
 なお、[公式日本語実装が予定](https://www.gamespark.jp/article/2018/04/09/79876.html)されています。
 したがいまして、いつまで更新をするか未定です。
