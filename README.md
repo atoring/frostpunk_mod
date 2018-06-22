@@ -63,9 +63,11 @@
 - [Frostpunk Steamサイト](https://store.steampowered.com/app/323190/Frostpunk/)
 - [Frostpunk Modツール(idx/dat)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7769)
 - [Frostpunk Modツール(lang)のスレッド(ZenHAXフォーラム)](http://forum.zenhax.com/viewtopic.php?t=7774)
+- [Janome](http://mocobeta.github.io/janome/)
 - [libGDX](https://github.com/libgdx/libgdx)
 - [Google Notoフォント](https://www.google.com/get/noto/)
 - [源真ゴシック](http://jikasei.me/font/genshin/)
+- [PyInstaller](https://www.pyinstaller.org/)
 - [Frostpunk 翻訳作業所(Googleスプレッドシート)](https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoYw4xIUtkk0bthxj_S-I)
 (弊方は管理人ではありません)
 
