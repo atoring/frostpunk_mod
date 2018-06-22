@@ -50,8 +50,10 @@ Steam版を対象としています。[GOG版](https://www.gog.com/game/frostpun
 ## 参考画像
 - 2018/06/22(バージョン1.1.0)<br>
 <img src="https://user-images.githubusercontent.com/33346100/41737790-3838b0ea-75cb-11e8-8cf6-af3d85e4c1e7.png" width=25%>
+
 - 2018/05/26(翻訳100%)<br>
 <img src="https://user-images.githubusercontent.com/33346100/40558136-5f221834-608d-11e8-8405-eeae9a126de8.jpg" width=25%> <img src="https://user-images.githubusercontent.com/33346100/40558170-6e29bc24-608d-11e8-93c0-4e421757a9cc.jpg" width=25%> <img src="https://user-images.githubusercontent.com/33346100/40558184-7977cbde-608d-11e8-95d3-5469639e9c97.jpg" width=25%>
+
 - 2018/05/09(翻訳30%前後) (機械翻訳も含まれています)<br>
 <img src="https://user-images.githubusercontent.com/33346100/39788474-98e9f2ec-5365-11e8-88d3-ffe9ccafa5cd.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788602-22fad014-5366-11e8-9f32-11d9a4debbe1.png" width=25%> <img src="https://user-images.githubusercontent.com/33346100/39788612-2ef1cf44-5366-11e8-89d3-be7239305d4e.png" width=25%>
 
