@@ -48,6 +48,9 @@
 <a href="https://www.youtube.com/watch?v=qqEpSOFDXGA&cc_load_policy=1&cc_lang_pref=ja"><img src="https://img.youtube.com/vi/qqEpSOFDXGA/hqdefault.jpg" alt="日本語字幕付き公式トレイラー" width=25%></a>
 
 ## 参考画像
+- 2018/06/29(バージョン1.1.1)<br>
+<img src="https://user-images.githubusercontent.com/33346100/42065620-f0ea63c6-7b76-11e8-8cf3-f9bd1a8c7bbe.png" width=25%>
+
 - 2018/06/22(バージョン1.1.0)<br>
 <img src="https://user-images.githubusercontent.com/33346100/41737790-3838b0ea-75cb-11e8-8cf6-af3d85e4c1e7.png" width=25%>
 
