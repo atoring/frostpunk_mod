@@ -88,6 +88,7 @@ def _change_text(text, ref_text):
         jf = False
         for token in tokens:
 #            print(token)
+#            log(token)
             pos = token.part_of_speech.split(',')
             if jf:
                 if pos[0]!="助詞" and pos[1]!="読点" and pos[1]!="句点":
@@ -96,6 +97,10 @@ def _change_text(text, ref_text):
             if pos[1]=="係助詞" or pos[1]=="格助詞":
                 jf = True
             str += token.surface
+#        print(text)
+#        log(text)
+#        print(str)
+#        log(str)
         text = str
     return text
 
