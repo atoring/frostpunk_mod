@@ -12,6 +12,8 @@ _backup_files = [
     "common.dat",
     "localizations.idx",
     "localizations.dat",
+    "videos.idx",
+    "videos.dat",
     ]
 
 class Backup():

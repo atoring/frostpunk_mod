@@ -33,7 +33,7 @@ _def_game_path1     = r"C:\Program Files (x86)\Steam\SteamApps\common\Frostpunk"
 _def_game_path2     = r"C:\Program Files\Steam\SteamApps\common\Frostpunk"
 _game_exe           = "Frostpunk.exe"
 
-_win_size           = "420x535"
+_win_size           = "420x585"
 _win_frame_col      = "gray"
 _version_fg_col     = "darkblue"
 _inf_fg_col         = "darkgreen"
@@ -83,8 +83,8 @@ def exec_path(path, cur_path):
         subprocess.Popen([path], cwd=cur_path)
 
 def open_csv(path):
-    "execute .csv program"
-    log("execute .csv program", path)
+    "execute csv program"
+    log("execute csv program", path)
     path = correct_path(path)
     if check_path(path):
         subprocess.Popen(["start", "", path], shell=True)
@@ -278,9 +278,9 @@ class Config():
         self.frame              = LabelFrame(master, text="設定")
 
         self.game_path_frame    = Frame(self.frame)
-        self.game_path_label    = Label(self.game_path_frame, text="ゲームパス:")
+        self.game_path_label    = Label(self.game_path_frame, text="ゲームパス")
         self.game_path_entry    = Entry(self.game_path_frame, text=master.game_path)
-        self.open_game_dlg_btn  = LButton(self.game_path_frame, text="...", command=self.open_game_dlg)
+        self.open_game_dlg_btn  = LButton(self.game_path_frame, text="参照", command=self.open_game_dlg)
 
         self.game_misc_frame    = Frame(self.frame)
         self.exec_game_btn      = LButton(self.game_misc_frame, text="ゲームを起動", command=self.exec_game)
@@ -338,11 +338,12 @@ class ManageData():
         "constructor"
         self.frame              = LabelFrame(master, text="データ管理")
 
-        self.backup_btn         = Button(self.frame, text="パッチに関係するデータ(4ファイル)をバックアップ", command=lambda arg=master: self.backup(arg))
-        self.restore_btn        = Button(self.frame, risk=True, text="パッチに関係するデータ(4ファイル)をリストア", command=lambda arg=master: self.restore(arg))
+        self.backup_btn         = Button(self.frame, text="パッチに関係するデータ(6ファイル)をバックアップ", command=lambda arg=master: self.backup(arg))
+        self.restore_btn        = Button(self.frame, risk=True, text="パッチに関係するデータ(6ファイル)をリストア", command=lambda arg=master: self.restore(arg))
         self.open_data_exp_btn  = Button(self.frame, text="バックアップデータフォルダを開く", command=self.open_backup_path)
-        self.download_sheet_btn = Button(self.frame, text="翻訳シート(.csv)をWebサイトからダウンロード", command=self.download_sheet)
-        self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(.csv)を開く", command=self.open_sheet)
+        self.download_sheet_btn = Button(self.frame, text="翻訳シート(csv)をWebサイトからダウンロード", command=self.download_sheet)
+        self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(csv)を開く", command=self.open_sheet)
+        self.download_movie_btn = Button(self.frame, text="( 字幕付き動画をダウンロード(任意) )", command=self.download_movie)
 
     def backup(self, master):
         "backup data"
@@ -411,8 +412,8 @@ class ManageData():
             error_msg("翻訳シートをダウンロードできませんでした。")
 
     def open_sheet(self):
-        "open .csv sheet"
-        log("open .csv sheet")
+        "open csv sheet"
+        log("open csv sheet")
         sheet = patch_japanese.Sheet()
         if not sheet.exists:
             error_msg("翻訳シートがありません。\n一度ダウンロードする必要があります。")
@@ -420,6 +421,22 @@ class ManageData():
         path = sheet.sheet_path
         if check_path(path):
             open_csv(path)
+
+    def download_movie(self):
+        "download movie"
+        log("download movie")
+        ret = question_msg("字幕付き動画をダウンロードします。若干時間が掛かります。\n300Mバイトほどのファイルをダウンロードします。\nよろしいですか?")
+        if ret != "yes":
+            return
+        movie = patch_japanese.Movie()
+        if movie.exists:
+            ret = question_msg("動画を上書きします。\nよろしいですか?", risk=True)
+            if ret != "yes":
+                return
+        if movie.fetch():
+            info_msg("動画をダウンロードしました。")
+        else:
+            error_msg("動画をダウンロードできませんでした。")
 
 class Patch():
     "patch frame"
@@ -430,7 +447,8 @@ class Patch():
 
         self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応", command=lambda arg=master: self.patch_font(arg))
         self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応", command=lambda arg=master: self.patch_lang(arg))
-        self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(.csv)を開く", command=self.open_lang)
+        self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(csv)を開く", command=self.open_lang)
+        self.patch_movie_btn = Button(self.frame, risk=True, text="( 動画パッチを適応(任意) )", command=lambda arg=master: self.patch_movie(arg))
 
     def patch_font(self, master):
         "patch font"
@@ -477,8 +495,8 @@ class Patch():
             error_msg("翻訳パッチを適応できませんでした。")
 
     def open_lang(self):
-        "open lang .csv sheet"
-        log("open lang .csv sheet")
+        "open lang csv sheet"
+        log("open lang csv sheet")
         patch = patch_japanese.Patch()
         if not patch.lang_exists:
             error_msg("ゲームの翻訳シートがありません。\n一度翻訳パッチを適応する必要があります。")
@@ -486,6 +504,30 @@ class Patch():
         path = patch.lang_path
         if check_path(path):
             open_csv(path)
+
+    def patch_movie(self, master):
+        "patch movie"
+        log("patch movie")
+        path = master.config.game_path
+        if not path:
+            error_msg("ゲームパスを設定してください。")
+            return
+        bk = backup.Backup()
+        if not bk.exists:
+            error_msg("バックアップデータがありません。\n一度バックアップをする必要があります。")
+            return
+        movie = patch_japanese.Movie()
+        if not movie.exists:
+            error_msg("字幕付き動画がありません。\n一度ダウンロードする必要があります。")
+            return
+        ret = question_msg("動画パッチを適応します。若干時間が掛かります。\nよろしいですか?", risk=True)
+        if ret != "yes":
+            return
+        patch = patch_japanese.Patch()
+        if patch.patch_movie(path):
+            info_msg("動画パッチを適応しました。")
+        else:
+            error_msg("動画パッチを適応できませんでした。")
 
 class Link():
     "link frame"

@@ -16,6 +16,7 @@ spanish_lang_id     = 0x93d6426a
 polish_lang_id      = 0x7d919140
 russian_lang_id     = 0xf2232be3
 chinese_lang_id     = 0xfce49418
+intro_mov_id        = 0xc3470d1b
 lang_ids = [
     english_lang_id,
     french_lang_id,

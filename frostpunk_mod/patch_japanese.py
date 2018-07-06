@@ -18,8 +18,13 @@ _sheet_url  = "https://docs.google.com/spreadsheets/d/1g-7OZgzjzOh1t701w92ABIvoY
 _sheet_path = "data"
 _sheet_file = "Frostpunk 翻訳作業所 - 翻訳.csv"
 
+_movie_url  = "https://raw.githubusercontent.com/atoring/frostpunk_mod/develop/movie/url.txt"
+_movie_path = "data"
+_movie_file = "intro_wide_ja.ogv"
+
 _cmn_file   = "common"
 _loc_file   = "localizations"
+_vid_file   = "videos"
 
 _font_path      = "data"
 _font_zip_file  = "notosanscjksc-medium.otf.binfont.zip"
@@ -141,6 +146,45 @@ class Sheet():
         "get sheet path"
         return self.__sheet_file
 
+class Movie():
+    "subtitled movie"
+
+    def __init__(self):
+        "constructor"
+        path = os.path.join(get_prog_path(), _movie_path)
+        path = path.replace("/", os.sep)
+        self.__movie_path = path
+        path = os.path.join(path, _movie_file)
+        self.__movie_file = path
+
+    def fetch(self):
+        "fetch movie"
+        log("fetch movie", _movie_url)
+        try:
+            url = urllib.request.urlopen(_movie_url).read().decode("utf-8-sig")
+            log("movie url", url)
+            data = urllib.request.urlopen(url).read()
+        except:
+            log("error", "fetch movie", _movie_url)
+            return False
+        if not make_dir(self.__movie_path):
+            return False
+        if not write_bin(self.__movie_file, data):
+            return False
+        # write Zone.Identifier to NTFS stream of csv file
+        write_txt(self.__movie_file+":Zone.Identifier", "[ZoneTransfer]\nZoneId=3", "ascii")
+        return True
+
+    @property
+    def exists(self):
+        "check exsits movie file"
+        return os.path.isfile(self.__movie_file)
+
+    @property
+    def movie_path(self):
+        "get movie path"
+        return self.__movie_file
+
 class Patch():
     "patch japanese translation"
 
@@ -161,6 +205,12 @@ class Patch():
         self.__lang_path = path
         path = os.path.join(path, _lang_file)
         self.__lang_file = path
+
+        path = os.path.join(get_prog_path(), _movie_path)
+        path = path.replace("/", os.sep)
+        self.__movie_path = path
+        path = os.path.join(self.__movie_path, _movie_file)
+        self.__movie_file = path
 
         path = os.path.join(get_prog_path(), _tmp_path)
         path = path.replace("/", os.sep)
@@ -255,6 +305,33 @@ class Patch():
                 return False
         if not self.__copy_archive(game_loc_path, tmp_loc_path):
             self.__copy_archive(game_loc_path, bk_loc_path)
+            delete_dir(self.__tmp_path)
+            return False
+        delete_dir(self.__tmp_path)
+        return True
+
+    def patch_movie(self, path):
+        "patch movie file"
+        log("patch movie file", path)
+        bk = backup.Backup()
+        bk_vid_path = os.path.join(bk.backup_path, _vid_file)
+        tmp_vid_path = os.path.join(self.__tmp_path, _vid_file)
+        game_vid_path = os.path.join(path, _vid_file)
+        movie = read_bin(self.__movie_file)
+        if not movie:
+            return False
+        with archive.Archive() as arc:
+            if not arc.read_archive(bk_vid_path):
+                return False
+            if not arc.set_file(archive.intro_mov_id, movie):
+                return False
+            if not make_dir(self.__tmp_path):
+                return False
+            if not arc.write_archive(tmp_vid_path):
+                delete_dir(self.__tmp_path)
+                return False
+        if not self.__copy_archive(game_vid_path, tmp_vid_path):
+            self.__copy_archive(game_vid_path, bk_vid_path)
             delete_dir(self.__tmp_path)
             return False
         delete_dir(self.__tmp_path)
