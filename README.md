@@ -1,7 +1,7 @@
 /* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
 
 # Frostpunk非公式日本語化MODツール
-<img src="https://user-images.githubusercontent.com/33346100/42363253-cc452108-8131-11e8-8119-da71f171f389.png" width=25%>
+<img src="https://user-images.githubusercontent.com/33346100/42363414-95a1257e-8132-11e8-8b17-cd2e42231362.png" width=25%>
 
 ## 概要
 [Frostpunk](https://store.steampowered.com/app/323190/Frostpunk/)の非公式日本語化MODツールです。
