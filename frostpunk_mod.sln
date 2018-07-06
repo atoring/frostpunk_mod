@@ -21,6 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{23
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "binfont", "binfont\binfont.pyproj", "{DFB2ED58-86F0-4898-846F-020B80EA30AD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "movie", "movie", "{B5C7EED9-F19C-4CE9-9022-BD9ED7FB9EAF}"
+	ProjectSection(SolutionItems) = preProject
+		movie\add_sub.bat = movie\add_sub.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
