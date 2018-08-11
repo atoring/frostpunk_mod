@@ -96,3 +96,5 @@
 |2018/05/19|翻訳100% (1%から100%まで2週間)|
 |2018/06/19|[Frostpunk 1.1.0アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/3077529495343351883)|
 |2018/06/29|[Frostpunk 1.1.1アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/1682540619659859630)|
+|2018/08/06|[Frostpunk 1.1.2アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/1696054587191950888)|
+|2018/08/10|[Frostpunk 1.1.2アップデートHotfix公開](https://steamcommunity.com/games/323190/announcements/detail/1699432921268670453)|
