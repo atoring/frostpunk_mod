@@ -224,10 +224,10 @@ class Archive():
         log("tmp", tmp)
         cnt = 0
         size = len(data)
-        index_struct = struct.Struct("<IIIIB")
-        while cnt < files and offset + 17 <= size:
+        index_struct = struct.Struct("<IQQQB")
+        while cnt < files and offset + index_struct.size <= size:
             idx_id, idx_data_size, idx_decode_size, idx_offset, idx_flag = index_struct.unpack_from(data, offset)
-            offset += 17
+            offset += index_struct.size
             index = {_idx_id:idx_id, _idx_data_size:idx_data_size, _idx_decode_size:idx_decode_size, _idx_offset:idx_offset, _idx_flag:idx_flag}
 #            log("index", index)
             file = File(self)
@@ -249,7 +249,7 @@ class Archive():
             log("open file", index_path)
             with open(index_path, "wb") as fi:
                 fi.write(struct.pack("<BBBII", 0x00, 0x02, 0x01, len(file_list), 0))    # head
-                index_struct = struct.Struct("<IIIIB")
+                index_struct = struct.Struct("<IQQQB")
                 offset = 0
                 for id, file in file_list:
                     data = file.comp_data
