@@ -33,7 +33,8 @@ _def_game_path1     = r"C:\Program Files (x86)\Steam\SteamApps\common\Frostpunk"
 _def_game_path2     = r"C:\Program Files\Steam\SteamApps\common\Frostpunk"
 _game_exe           = "Frostpunk.exe"
 
-_win_size           = "420x585"
+#_win_size           = "420x585"
+_win_size           = "420x535"
 _win_frame_col      = "gray"
 _version_fg_col     = "darkblue"
 _inf_fg_col         = "darkgreen"
@@ -343,7 +344,7 @@ class ManageData():
         self.open_data_exp_btn  = Button(self.frame, text="バックアップデータフォルダを開く", command=self.open_backup_path)
         self.download_sheet_btn = Button(self.frame, text="翻訳シート(csv)をWebサイトからダウンロード", command=self.download_sheet)
         self.open_sheet_btn     = Button(self.frame, text="ダウンロードした翻訳シート(csv)を開く", command=self.open_sheet)
-        self.download_movie_btn = Button(self.frame, text="( 字幕付き動画をダウンロード(任意) )", command=self.download_movie)
+#        self.download_movie_btn = Button(self.frame, text="( 字幕付き動画をダウンロード(任意) )", command=self.download_movie)
 
     def backup(self, master):
         "backup data"
@@ -448,7 +449,7 @@ class Patch():
         self.patch_font_btn = Button(self.frame, risk=True, text="フォント(binfont)パッチを適応", command=lambda arg=master: self.patch_font(arg))
         self.patch_lang_btn = Button(self.frame, risk=True, text="翻訳(lang)パッチを適応", command=lambda arg=master: self.patch_lang(arg))
         self.open_lang_btn  = Button(self.frame, text="ゲームの翻訳シート(csv)を開く", command=self.open_lang)
-        self.patch_movie_btn = Button(self.frame, risk=True, text="( 動画パッチを適応(任意) )", command=lambda arg=master: self.patch_movie(arg))
+#        self.patch_movie_btn = Button(self.frame, risk=True, text="( 動画パッチを適応(任意) )", command=lambda arg=master: self.patch_movie(arg))
 
     def patch_font(self, master):
         "patch font"
