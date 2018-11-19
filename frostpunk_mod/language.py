@@ -101,7 +101,8 @@ class Language():
             text_size = size_struct.unpack_from(data, offset)[0]
             offset += 2
 #            log("text size", text_size)
-            index = data[offset:offset+text_size].decode("ascii")
+#            index = data[offset:offset+text_size].decode("ascii")
+            index = data[offset:offset+text_size].decode("latin-1")
             offset += text_size
 #            log("index", index)
             text_size = size_struct.unpack_from(data, offset)[0]*2
@@ -140,7 +141,8 @@ class Language():
             str = text.get_text(lang_idx)
             if str is not None:
                 data.extend(size_struct.pack(len(index)))
-                data.extend(index.encode("ascii"))
+#                data.extend(index.encode("ascii"))
+                data.extend(index.encode("latin-1"))
                 data.extend(size_struct.pack(len(str)))
                 data.extend(str.encode("utf-16-le"))
                 cnt += 1
