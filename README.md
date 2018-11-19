@@ -100,3 +100,5 @@
 |2018/08/10|[Frostpunk 1.1.2アップデートHotfix公開](https://steamcommunity.com/games/323190/announcements/detail/1699432921268670453)|
 |2018/09/19|[Frostpunk 1.2.0アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/1688177728620480875)|
 |2018/10/04|[Frostpunk 1.2.1アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/1684801296366763014)|
+|2018/10/26|[Frostpunk OST発売](https://steamcommunity.com/games/323190/announcements/detail/1689306797525228539)|
+|2018/11/20|[Frostpunk 1.3.0アップデート公開](https://steamcommunity.com/games/323190/announcements/detail/2486445930598806145)|
