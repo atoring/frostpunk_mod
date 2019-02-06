@@ -1,6 +1,8 @@
 /* [obsolete tools are here.](https://github.com/atoring/frostpunk_mod/tree/suspend) */
 
 # Frostpunk非公式日本語化MODツール
+## // ver1.3.3にて公式で日本語が実装されました！今までありがとうございました！
+
 <img src="https://user-images.githubusercontent.com/33346100/42363414-95a1257e-8132-11e8-8b17-cd2e42231362.png" width=25%>
 
 ## 概要
